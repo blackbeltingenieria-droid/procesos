@@ -16,4 +16,6 @@ Todo el contenido está en **`assets/js/datos.js`**. Edite ese archivo (también
 ## Publicación
 Settings → Pages → Source: *Deploy from a branch* → rama `main`, carpeta `/ (root)`.
 
+Dominio propio: `procesos.blackbeltcorp.com` (archivo `CNAME`). En Cloudflare: registro CNAME `procesos` → `blackbeltingenieria-droid.github.io`.
+
 Estado: documento de trabajo. Solo Henry (Gerencia General) valida y aprueba.
