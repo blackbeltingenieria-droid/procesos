@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLACKBELT · Portafolio de procesos</title>
+<meta name="description" content="Mapa de procesos, fichas técnicas e indicadores de BLACKBELT GROUP S.A.C.">
+<meta name="theme-color" content="#0B0B0B">
+<link rel="icon" href="assets/img/logo-oscuro.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/estilos.css">
+</head>
+<body>
+<a class="saltar" href="#app">Saltar al contenido</a>
+<header class="barra">
+  <a class="marca" href="#/" aria-label="Inicio del portafolio"><img src="assets/img/logo-oscuro.png" alt="BLACKBELT"><span>Procesos</span></a>
+  <button id="btn-menu" class="btn-menu" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">☰</button>
+  <nav id="menu" class="menu" aria-label="Secciones">
+    <a href="#/mapa">Mapa</a><a href="#/inventario">Inventario</a><a href="#/indicadores">Indicadores</a><a href="#/interrelacion">Interrelación</a><a href="#/servicios">Servicios</a><a href="#/documentos">Documentos</a><a href="#/plan">Plan</a>
+  </nav>
+  <div class="buscador">
+    <label for="q" class="sr">Buscar proceso, indicador o documento</label>
+    <input id="q" type="search" placeholder="Buscar: M.02, conversión, FO-M01…" autocomplete="off">
+    <div id="resultados" class="resultados" hidden></div>
+  </div>
+</header>
+<main id="app" tabindex="-1"></main>
+<footer id="pie" class="pie"></footer>
+<script src="assets/js/datos.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
