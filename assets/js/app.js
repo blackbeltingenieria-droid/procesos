@@ -37,7 +37,7 @@
       ["#/inventario", "Inventario", `Niveles 0, 1 y 2 con su codificación (${n1} subprocesos).`, "arbol"],
       ["#/indicadores", "Tablero de indicadores", `${D.indicadores.length} indicadores con fórmula, fuente y meta.`, "kpi"],
       ["#/interrelacion", "Interrelación", "Qué entrega cada proceso a los demás.", "red"],
-      ["#/servicios", "Servicios de investigación", "Catálogo de M.02 y subprocesos que aplica cada servicio.", "lupa"],
+      ["#/servicios", "Servicios de investigación", `${D.servicios.length} servicios de M.02: qué incluye cada uno, pagos por partes y subprocesos.`, "lupa"],
       ["#/documentos", "Documentos y formatos", "Fichas, formatos y contratos con su estado.", "doc"],
       ["#/plan", "Plan de estandarización", "Fases, avance y control de cambios.", "plan"]
     ];
@@ -205,10 +205,22 @@
   }
 
   function vServicios() {
+    const sub = (c) => (N1[c] ? `<a class="chip" href="#/p/${c}">${c} ${esc(N1[c].n.nombre)}</a>` : "");
+    const tarjeta = (s) => `<article class="servicio card" id="${esc(s.cod)}">
+      <div class="sv-head"><span class="cod">${esc(s.cod)}</span>${docb(s.estado)}</div>
+      <h3>${esc(s.nombre)}</h3>${s.requisito ? `<p class="muted">Requisito: ${esc(s.requisito)}</p>` : ""}
+      <table class="tabla kv"><tr><th>Cotización</th><td>${esc(s.precioModo)}</td></tr><tr><th>Precio</th><td>${esc(s.precio)}</td></tr></table>
+      <h4>Incluye</h4><ul>${s.incluye.map((x) => `<li>${prop(x)}</li>`).join("")}</ul>
+      ${s.partes.length ? `<h4>Pago por partes · ${s.partes.length} entregables</h4><ol class="partes">${s.partes.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>` : ""}
+      <h4>Subprocesos que aplica</h4><div class="chips">${s.subprocesos.map(sub).join("")}</div></article>`;
+    const conPartes = D.servicios.filter((s) => s.partes.length).map((s) => s.cod).join(" y ");
     return `${migas([["#/p/M.02", "M.02"], ["#/servicios", "Servicios"]])}<h1>Servicios de investigación (M.02)</h1>
-    <p class="lead">Modalidades del servicio y subprocesos de M.02 que aplica cada una. Lista preliminar: Johann enviará el catálogo definitivo.</p>
-    <div class="grid-cards">${D.servicios.map((s) => `<div class="card"><h3>${esc(s.nombre)}</h3><p>${esc(s.desc)}</p><p class="muted">${esc(s.precio)} · ${docb(s.estado)}</p><div class="chips">${s.subprocesos.map((c) => `<a class="chip" href="#/p/${c}">${c} ${esc(N1[c].n.nombre)}</a>`).join("")}</div></div>`).join("")}</div>
-    <h2>Oferta publicada en el brochure</h2><ul class="cols">${D.serviciosBrochure.map((s) => `<li>${esc(s)}</li>`).join("")}</ul>`;
+    <p class="lead">Catálogo vigente de ${D.servicios.length} servicios según la lista de precios de BLACKBELT. ${conPartes} se pueden pagar por partes: cada parte es un entregable con su cobro.</p>
+    <div class="scroll"><table class="tabla"><thead><tr><th>Código</th><th>Servicio</th><th>Cotización</th><th>Pago por partes</th><th>Reportes %SIM e %IA</th></tr></thead><tbody>
+    ${D.servicios.map((s) => `<tr><td><a href="#${esc(s.cod)}" data-ir="${esc(s.cod)}">${esc(s.cod)}</a></td><td>${esc(s.nombre)}</td><td>${esc(s.precioModo)}</td><td>${s.partes.length ? s.partes.length + " partes" : "No"}</td><td>${s.incluye.some((x) => /%SIM/.test(x)) ? "Sí, en cada avance" : "No incluido"}</td></tr>`).join("")}</tbody></table></div>
+    <div class="grid-servicios">${D.servicios.map(tarjeta).join("")}</div>
+    <h2>Observaciones de mejora</h2><ul>${D.serviciosNotas.map((x) => `<li>${autolink(x)}</li>`).join("")}</ul>
+    <h2>Oferta publicada en el brochure</h2><ul class="cols">${D.serviciosBrochure.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
   }
 
   function vDocumentos() {
@@ -231,7 +243,8 @@
     ...D.procesos.map((p) => ({ cod: p.cod, t: p.nombre, h: "#/p/" + p.cod, k: "Proceso" })),
     ...Object.values(N1).map(({ n }) => ({ cod: n.cod, t: n.nombre, h: "#/p/" + n.cod, k: "Nivel 1" })),
     ...D.indicadores.map((i) => ({ cod: i.cod, t: i.nombre, h: "#/i/" + i.cod, k: "Indicador" })),
-    ...D.documentos.map((d) => ({ cod: d.cod, t: d.nombre, h: "#/documentos", k: "Documento" }))
+    ...D.documentos.map((d) => ({ cod: d.cod, t: d.nombre, h: "#/documentos", k: "Documento" })),
+    ...D.servicios.map((v) => ({ cod: v.cod, t: v.nombre, h: "#/servicios", k: "Servicio" }))
   ];
   const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   function buscar(q) {
@@ -263,6 +276,8 @@
   document.addEventListener("click", (e) => {
     const b = e.target.closest("[data-abrir]");
     if (b) document.querySelectorAll("details.inv").forEach((d) => (d.open = b.dataset.abrir === "1"));
+    const ir = e.target.closest("[data-ir]");
+    if (ir) { e.preventDefault(); const t = document.getElementById(ir.dataset.ir); if (t) t.scrollIntoView({ behavior: "smooth" }); }
     const f = e.target.closest("[data-f]");
     if (f) {
       document.querySelectorAll("[data-f]").forEach((x) => x.classList.toggle("on", x === f));
