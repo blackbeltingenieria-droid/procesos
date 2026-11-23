@@ -627,7 +627,7 @@ window.BB = {
     { version: "0.1", fecha: "21/11/2026", cambio: "Mapa general, inventario e indicadores candidatos.", estado: "Borrador" },
     { version: "0.2", fecha: "21/11/2026", cambio: "Datos de SUNAT, BLACKBELT Institute (M.08), ficha M.01.", estado: "Mapa validado por Henry" },
     { version: "0.3", fecha: "22/11/2026", cambio: "Portafolio web con modelo UNHEVAL: niveles 0-1-2, fichas técnicas, fichas de indicador, interrelación y documentos.", estado: "Borrador" },
-    { version: "0.5", fecha: "22/11/2026", cambio: "Catálogo de 5 servicios de M.02 con lo que incluye, pagos por partes y reportes de %SIM e %IA; indicadores M.02.I05 y M.02.I06.", estado: "Borrador" },
+    { version: "0.4", fecha: "22/11/2026", cambio: "Catálogo de 5 servicios de M.02 con lo que incluye, pagos por partes y reportes de %SIM e %IA; indicadores M.02.I05 y M.02.I06.", estado: "Borrador" },
     { version: "0.5", fecha: "22/11/2026", cambio: "Diagramas de flujo con carriles (estilo BPMN) de M.01, M.02 y M.07; precios fuera de los procesos; encuesta intermedia en la parte 4; herramientas Turnitin y JustDone.", estado: "Borrador" }
   ]
 };
