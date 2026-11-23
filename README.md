@@ -13,6 +13,9 @@ Todo el contenido está en **`assets/js/datos.js`**. Edite ese archivo (también
 ## Navegación
 `#/mapa` · `#/inventario` · `#/p/M.01` (ficha nivel 0) · `#/p/M.01.02` (ficha nivel 1) · `#/i/M.01.I01` (ficha de indicador) · `#/indicadores` · `#/interrelacion` · `#/servicios` · `#/documentos` · `#/plan`
 
+## Actualizar versión
+Al publicar cambios, sube el número `?v=` de `index.html` (CSS y JS) para que los navegadores no usen la versión en caché.
+
 ## Publicación
 Settings → Pages → Source: *Deploy from a branch* → rama `main`, carpeta `/ (root)`.
 
