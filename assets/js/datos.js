@@ -20,7 +20,7 @@ window.BB = {
     empresa: "BLACKBELT GROUP S.A.C.",
     ruc: "20616527704",
     domicilio: "Cal. Huayllabamba 192, Coop. Veintisiete de Abril, Ate, Lima",
-    version: "0.4",
+    version: "0.5",
     fecha: "22/11/2026",
     elaboro: "Johann Herrera (Mejora Continua)",
     aprueba: "Henry (Gerencia General)",
@@ -163,7 +163,7 @@ window.BB = {
       objetivo: "Convertir a un cliente interesado en un caso con alcance, precio y plazo acordados por escrito antes de iniciar el trabajo.",
       alcance: "Hoy solo el servicio de investigación (M.02). Se aplicará a las demás unidades cuando operen.",
       inicio: "El cliente potencial hace el primer contacto (referido, redes o Facebook Ads).", fin: "Contrato firmado y grupo de WhatsApp del caso creado; el caso pasa a M.02.",
-      situacion: "Henry atiende el contacto, hace un Meet, acuerda casi todo verbalmente, fija el precio caso por caso (una investigación completa ronda S/ 3,000), firma el contrato general (título del proyecto y nombre del cliente) y crea el grupo de WhatsApp. El cierre toma 1 a 3 días. La conversión no se mide.",
+      situacion: "Henry atiende el contacto, hace un Meet, acuerda casi todo verbalmente, fija el precio caso por caso según la lista de precios, firma el contrato general (título del proyecto y nombre del cliente) y crea el grupo de WhatsApp. El cierre toma 1 a 3 días. La conversión no se mide.",
       nivel1: [
         { cod: "M.01.01", nombre: "Captación y registro del contacto", dueno: "Henry (Jeferson en campañas)", objetivo: "Atender y registrar cada contacto con su origen.",
           entradas: ["Mensaje del cliente potencial"], salidas: ["Contacto registrado con canal de origen"], registros: ["FO-M01-01 Registro de contactos (*)"],
@@ -173,7 +173,7 @@ window.BB = {
           nivel2: [ { cod: "M.01.02.P01", nombre: "Reunión Meet de diagnóstico" }, { cod: "M.01.02.P02", nombre: "Evaluación de viabilidad (información disponible, plazo, competencias, especialista) (*)" }, { cod: "M.01.02.P03", nombre: "Rechazo o alternativa por escrito (*)" } ] },
         { cod: "M.01.03", nombre: "Propuesta y contrato", dueno: "Henry", objetivo: "Dejar por escrito lo acordado y abrir el caso.",
           entradas: ["Caso viable", "Referencia de precios (*)"], salidas: ["Contrato firmado", "Grupo de WhatsApp y carpeta del caso"], registros: ["FO-M01-03 Propuesta de servicio (*)", "Contrato general (existe)"],
-          nivel2: [ { cod: "M.01.03.P01", nombre: "Propuesta escrita: alcance, entregables, plazos, revisiones, cambios, precio y forma de pago (*)" }, { cod: "M.01.03.P02", nombre: "Aceptación del cliente" }, { cod: "M.01.03.P03", nombre: "Contrato y apertura del caso (grupo y carpeta en Drive)" } ] }
+          nivel2: [ { cod: "M.01.03.P01", nombre: "Propuesta escrita: servicio, alcance, entregables, plazos, revisiones, cambios y forma de pago (*); el precio oferta lo autoriza Henry" }, { cod: "M.01.03.P02", nombre: "Aceptación del cliente" }, { cod: "M.01.03.P03", nombre: "Contrato y apertura del caso (grupo y carpeta en Drive)" } ] }
       ],
       sipoc: [
         { prov: "E.03 Marca y marketing / referidos", ent: "Contacto del cliente potencial", sub: "M.01.01", prod: "Contacto registrado con canal", cli: "E.03 (medición)" },
@@ -182,7 +182,7 @@ window.BB = {
         { prov: "S.04 Legal", ent: "Modelo de contrato general", sub: "M.01.03", prod: "Contrato firmado y caso abierto", cli: "Cliente, M.02, S.01, S.03" }
       ],
       requisitos: ["Código Civil peruano (contratos) — por validar", "Ley N.° 29571, Código de Protección y Defensa del Consumidor — por validar", "Ley N.° 29733, Protección de Datos Personales — por validar"],
-      controles: ["Evaluación de viabilidad antes de ofertar (*)", "Propuesta aceptada por escrito antes del contrato (*)", "El contrato aclara que no se garantiza la aprobación institucional ni un porcentaje de similitud (*)", "Registro del motivo de cada caso no cerrado (*)"],
+      controles: ["Evaluación de viabilidad antes de ofertar (*)", "Propuesta aceptada por escrito antes del contrato (*)", "El precio oferta solo se aplica con autorización de Henry", "El contrato aclara que no se garantiza la aprobación institucional ni un porcentaje de similitud (*)", "Registro del motivo de cada caso no cerrado (*)"],
       recursos: { humanos: ["Henry", "Teddy o especialista (consulta de viabilidad)"], sistemas: ["Google Meet", "WhatsApp", "Google Drive", "Sistema propio de costos"], instalaciones: ["Trabajo virtual"], equipos: ["Computadora, celular"] },
       indicadores: ["M.01.I01", "M.01.I02", "M.01.I03", "M.01.I04"],
       salidas: [ { a: "M.02", que: "Caso contratado con alcance acordado" }, { a: "S.01", que: "Precio y forma de pago" }, { a: "S.03", que: "Carpeta del caso" }, { a: "E.03", que: "Canal de origen de los clientes" } ],
@@ -214,7 +214,7 @@ window.BB = {
           nivel2: [ { cod: "M.02.04.P01", nombre: "Redacción" }, { cod: "M.02.04.P02", nombre: "Formato y normas de citación" } ] },
         { cod: "M.02.05", nombre: "Revisión técnica y de similitud", dueno: "Henry", objetivo: "Verificar calidad técnica y requisitos antes de entregar.",
           entradas: ["Borrador del entregable"], salidas: ["Entregable aprobado internamente"], registros: ["FO-M02-02 Control de entregas y revisiones (*)"],
-          nivel2: [ { cod: "M.02.05.P01", nombre: "Revisión técnica por revisor competente" }, { cod: "M.02.05.P02", nombre: "Reporte de %SIM e %IA de cada avance (incluido en los servicios SV-01 a SV-03)" }, { cod: "M.02.05.P03", nombre: "Aprobación interna de Henry" } ] }
+          nivel2: [ { cod: "M.02.05.P01", nombre: "Revisión técnica por revisor competente" }, { cod: "M.02.05.P02", nombre: "Reporte de %SIM (Turnitin) e %IA (JustDone) de cada avance (servicios SV-01 a SV-03)" }, { cod: "M.02.05.P03", nombre: "Aprobación interna de Henry" } ] }
       ],
       sipoc: [
         { prov: "M.01 Gestión comercial", ent: "Caso contratado, alcance y plazos", sub: "M.02.01", prod: "Plan del caso", cli: "Equipo del caso" },
@@ -223,12 +223,12 @@ window.BB = {
         { prov: "M.07 Entrega", ent: "Observaciones del cliente", sub: "M.02.04 – M.02.05", prod: "Entregable revisado y aprobado", cli: "M.07" }
       ],
       requisitos: ["Reglamentos de grados, títulos e integridad académica de la institución del cliente (requisito del cliente)", "Decreto Legislativo N.° 822, Ley sobre el Derecho de Autor — por validar", "Ley N.° 29733, Protección de Datos Personales — por validar"],
-      controles: ["Nunca fabricar antecedentes, datos ni referencias", "Revisión de Henry antes de cada envío (existe)", "Revisor competente para entregables técnicos (*)", "Registro de búsqueda cuando se piden antecedentes en cantidad (*)", "Reporte de %SIM e %IA en cada avance, con herramienta y fecha (*)", "Un porcentaje de similitud o de IA no se trata como prueba de calidad"],
-      recursos: { humanos: ["Henry", "Teddy", "Especialistas externos según el caso"], sistemas: ["Google Drive", "WhatsApp", "Herramientas de similitud del cliente o de la institución", "Bases de datos académicas"], instalaciones: ["Trabajo virtual"], equipos: ["Computadoras"] },
+      controles: ["Nunca fabricar antecedentes, datos ni referencias", "Revisión de Henry antes de cada envío (existe)", "Revisor competente para entregables técnicos (*)", "Registro de búsqueda cuando se piden antecedentes en cantidad (*)", "Reporte de %SIM (Turnitin) e %IA (JustDone) en cada avance, archivado con fecha (*)", "Si el %SIM o el %IA es alto, el texto se reescribe con aporte propio y cita correcta; no se usan herramientas para ocultar similitud o autoría", "Un porcentaje de similitud o de IA no se trata como prueba de calidad"],
+      recursos: { humanos: ["Henry", "Teddy", "Especialistas externos según el caso"], sistemas: ["Google Drive", "WhatsApp", "Turnitin (reporte de similitud)", "JustDone (detección de IA)", "Bases de datos académicas"], instalaciones: ["Trabajo virtual"], equipos: ["Computadoras"] },
       indicadores: ["M.02.I01", "M.02.I02", "M.02.I03", "M.02.I04", "M.02.I05", "M.02.I06"],
       salidas: [ { a: "M.07", que: "Entregable aprobado internamente" }, { a: "S.01", que: "Costo real del caso" }, { a: "S.03", que: "Versiones del entregable" } ],
       riesgos: [ { r: "Retrabajo por cambios sin límite", c: "Número de revisiones y cambios definidos en la propuesta (M.01.03)" }, { r: "Archivos solo en la computadora de Henry", c: "Expediente del caso en Drive con versiones (S.03)" } ],
-      pendientes: ["Montos de precio normal y oferta de cada servicio, y quién autoriza la oferta.", "Herramientas usadas para los reportes de %SIM e %IA.", "Un caso típico de inicio a fin: qué hace Henry, qué hace Teddy, cuándo entra el especialista y cuántas entregas parciales hay."]
+      pendientes: ["Un caso típico de inicio a fin: qué hace Henry, qué hace Teddy, cuándo entra el especialista y cuántas entregas parciales hay."]
     },
     {
       cod: "M.03", tipo: "M", nombre: "Ingeniería y Productividad", dueno: "Por definir", estado: "idea", doc: "Borrador", version: "0.1", unidad: true,
@@ -309,7 +309,7 @@ window.BB = {
           nivel2: [ { cod: "M.07.02.P01", nombre: "Registro de observaciones (ronda N de las acordadas) (*)" }, { cod: "M.07.02.P02", nombre: "Corrección en M.02 y nueva entrega" } ] },
         { cod: "M.07.03", nombre: "Satisfacción del cliente", dueno: "Henry (Johann mide)", objetivo: "Conocer la opinión del cliente durante y al final del servicio.",
           entradas: ["Pago de un hito intermedio", "Conformidad final"], salidas: ["Respuestas de encuesta"], registros: ["FO-M07-02 Encuesta intermedia (*)", "Encuesta final en Google Forms (existe)"],
-          nivel2: [ { cod: "M.07.03.P01", nombre: "Encuesta intermedia al pagar una parte intermedia (parte por definir) (*)" }, { cod: "M.07.03.P02", nombre: "Encuesta final en Google Forms" } ] },
+          nivel2: [ { cod: "M.07.03.P01", nombre: "Encuesta intermedia al pagar la parte 4 (Metodología) o el avance intermedio (*)" }, { cod: "M.07.03.P02", nombre: "Encuesta final en Google Forms" } ] },
         { cod: "M.07.04", nombre: "Conformidad y cierre", dueno: "Henry", objetivo: "Cerrar el caso con evidencia.",
           entradas: ["Última entrega aceptada"], salidas: ["Acta o mensaje de conformidad", "Caso archivado"], registros: ["FO-M07-01 Conformidad de servicio (*)"],
           nivel2: [ { cod: "M.07.04.P01", nombre: "Registro de conformidad (*)" }, { cod: "M.07.04.P02", nombre: "Cierre y archivo del expediente (*)" }, { cod: "M.07.04.P03", nombre: "Solicitud de referido (*)" } ] }
@@ -326,7 +326,7 @@ window.BB = {
       indicadores: ["M.07.I01", "M.07.I02", "M.07.I03"],
       salidas: [ { a: "S.01", que: "Cobros realizados" }, { a: "M.02", que: "Observaciones para corregir" }, { a: "E.03", que: "Referidos" }, { a: "E.02", que: "Resultados de satisfacción" }, { a: "S.03", que: "Expediente cerrado" } ],
       riesgos: [ { r: "El cliente no responde la encuesta final", c: "Encuesta intermedia al pagar un hito (*)" }, { r: "Servicios cobrados solo contra entrega final: trabajo no cobrado si el cliente abandona", c: "Usar los pagos por partes del catálogo como hitos de cobro en la propuesta (*)" } ],
-      pendientes: ["En qué parte del pago por partes se envía la encuesta intermedia.", "Preguntas de la encuesta actual de Google Forms."]
+      pendientes: [ "Preguntas de la encuesta actual de Google Forms."]
     },
     {
       cod: "M.08", tipo: "M", nombre: "BLACKBELT Institute", dueno: "Jair (con Jeferson)", estado: "ini", doc: "Borrador", version: "0.1", aparte: true,
@@ -454,7 +454,7 @@ window.BB = {
     { cod: "M.01.I01", proceso: "M.01", clave: true, nombre: "Tasa de conversión", finalidad: "Saber cuántas reuniones terminan en contrato.", formula: "Contratos firmados ÷ reuniones Meet realizadas × 100", responsable: "Henry", tipo: "Eficacia", unidad: "%", fuente: "FO-M01-01 Registro de contactos", frecuencia: "Mensual", meta: null },
     { cod: "M.01.I02", proceso: "M.01", nombre: "Tiempo de cierre", finalidad: "Medir la rapidez comercial.", formula: "Promedio de días entre el primer contacto y la firma del contrato", responsable: "Henry", tipo: "Eficiencia", unidad: "días", fuente: "FO-M01-01", frecuencia: "Mensual", meta: null, nota: "Referencia actual declarada: 1 a 3 días." },
     { cod: "M.01.I03", proceso: "M.01", nombre: "Casos con propuesta escrita", finalidad: "Comprobar que lo acordado queda por escrito.", formula: "Casos con propuesta aceptada por escrito ÷ contratos firmados × 100", responsable: "Johann (verificación)", tipo: "Calidad", unidad: "%", fuente: "FO-M01-03 y expedientes", frecuencia: "Mensual", meta: null },
-    { cod: "M.01.I04", proceso: "M.01", nombre: "Precio promedio por caso", finalidad: "Seguir el ingreso medio por caso.", formula: "Suma de precios contratados ÷ contratos firmados", responsable: "Henry", tipo: "Eficiencia", unidad: "S/", fuente: "FO-M01-01", frecuencia: "Mensual", meta: null, nota: "Referencia declarada: investigación completa cerca de S/ 3,000." },
+    { cod: "M.01.I04", proceso: "M.01", nombre: "Precio promedio por caso", finalidad: "Seguir el ingreso medio por caso.", formula: "Suma de precios contratados ÷ contratos firmados", responsable: "Henry", tipo: "Eficiencia", unidad: "S/", fuente: "FO-M01-01", frecuencia: "Mensual", meta: null },
     { cod: "M.02.I01", proceso: "M.02", clave: true, nombre: "Aceptación en primera entrega", finalidad: "Medir la calidad del entregable a la primera.", formula: "Entregas aceptadas sin observaciones ÷ entregas realizadas × 100", responsable: "Henry", tipo: "Calidad", unidad: "%", fuente: "FO-M02-02 Control de entregas y revisiones", frecuencia: "Mensual", meta: null },
     { cod: "M.02.I02", proceso: "M.02", nombre: "Rondas de corrección por caso", finalidad: "Medir el retrabajo.", formula: "Total de rondas de corrección ÷ casos cerrados", responsable: "Henry", tipo: "Eficiencia", unidad: "rondas", fuente: "FO-M02-02", frecuencia: "Mensual", meta: null },
     { cod: "M.02.I03", proceso: "M.02", nombre: "Entregas a tiempo", finalidad: "Medir el cumplimiento de plazos.", formula: "Entregas en la fecha pactada ÷ entregas realizadas × 100", responsable: "Henry", tipo: "Eficacia", unidad: "%", fuente: "FO-M02-01 y FO-M02-02", frecuencia: "Mensual", meta: null },
@@ -479,31 +479,120 @@ window.BB = {
 
   /* Catálogo de servicios de M.02 (Johann enviará la lista definitiva) */
   /* Catálogo de servicios de M.02 (lista de precios de BLACKBELT, 22/11/2026).
-     precioModo: cómo se cotiza · partes: entregables por los que se puede pagar por partes. */
+     partes: entregables por los que se puede pagar por partes. */
   servicios: [
-    { cod: "SV-01", nombre: "Desarrollo y asesoramiento de tesis", precioModo: "Precio normal y precio oferta", precio: "Montos por registrar (referencia declarada: investigación completa cerca de S/ 3,000)",
+    { cod: "SV-01", nombre: "Desarrollo y asesoramiento de tesis",
       incluye: ["Plan de tesis (si el cliente lo requiere)", "Asesoramiento especializado en cada avance", "Levantamiento de observaciones hasta antes y/o después de la sustentación, entrega o exposición final", "Reportes de %SIM e %IA en cada avance"],
       partes: ["Planteamiento de la problemática", "Hipótesis, matrices y aspectos administrativos (estos últimos si hay plan de tesis)", "Marco teórico", "Metodología", "Resultados y discusiones", "Conclusiones y recomendaciones", "Anexos y referencias"], subprocesos: ["M.02.01", "M.02.02", "M.02.03", "M.02.04", "M.02.05", "M.07.01", "M.07.02"], estado: "Confirmado" },
-    { cod: "SV-02", nombre: "Desarrollo y asesoramiento de plan de tesis", precioModo: "Precio normal y precio oferta", precio: "Montos por registrar",
+    { cod: "SV-02", nombre: "Desarrollo y asesoramiento de plan de tesis",
       incluye: ["Plan de tesis", "Asesoramiento especializado en cada avance", "Levantamiento de observaciones hasta antes y/o después de la sustentación, entrega o exposición final", "Reportes de %SIM e %IA en cada avance"],
       partes: [], subprocesos: ["M.02.01", "M.02.02", "M.02.03", "M.02.04", "M.02.05", "M.07.01", "M.07.02"], estado: "Confirmado" },
-    { cod: "SV-03", nombre: "Desarrollo y asesoramiento de artículos", requisito: "El cliente ya tiene la investigación previa", precioModo: "Precio normal y precio oferta", precio: "Montos por registrar",
+    { cod: "SV-03", nombre: "Desarrollo y asesoramiento de artículos", requisito: "El cliente ya tiene la investigación previa",
       incluye: ["Asesoramiento especializado en cada avance", "Levantamiento de observaciones hasta antes y/o después de la sustentación, entrega o exposición final", "Reportes de %SIM e %IA en cada avance"],
       partes: [], subprocesos: ["M.02.01", "M.02.04", "M.02.05", "M.07.01", "M.07.02"], estado: "Confirmado" },
-    { cod: "SV-04", nombre: "Levantamiento de observaciones y asesoramiento", precioModo: "Precio por paquete integral y precio oferta; también por partes", precio: "Montos por registrar",
+    { cod: "SV-04", nombre: "Levantamiento de observaciones y asesoramiento",
       incluye: ["Asesoramiento especializado en cada avance", "Levantamiento de observaciones hasta antes y/o después de la sustentación, entrega o exposición final"],
       partes: ["Fundamentación y planteamiento de la problemática", "Hipótesis, matrices y aspectos administrativos (estos últimos si hay plan de tesis)", "Marco teórico", "Metodología", "Resultados y discusiones", "Conclusiones y recomendaciones", "Anexos y referencias"], subprocesos: ["M.02.01", "M.02.04", "M.02.05", "M.07.02"], estado: "Confirmado" },
-    { cod: "SV-05", nombre: "Asesoramiento de investigación", precioModo: "Precio normal por sesión, por horas", precio: "Montos por registrar",
+    { cod: "SV-05", nombre: "Asesoramiento de investigación",
       incluye: ["Asesoramiento especializado hasta que el usuario sustente, exponga o haga la entrega final"],
       partes: [], subprocesos: ["M.02.01", "M.02.03"], estado: "Confirmado" }
   ],
   serviciosNotas: [
-    "Los reportes de %SIM (similitud) e %IA son evidencia de control, no prueba de calidad ni garantía de aprobación: se registra la herramienta usada, la fecha y el resultado en cada avance (*).",
-    "El pago por partes permite cobrar por hito y enviar la encuesta intermedia de satisfacción al pagar una parte intermedia (*). Falta definir en qué parte.",
+    "Los reportes de %SIM (Turnitin) e %IA (JustDone) son evidencia de control, no prueba de calidad ni garantía de aprobación: se archiva el reporte con su fecha en cada avance (*).",
+    "La cuenta de Turnitin que se usa es institucional (UDH): confirmar que la licencia permite usarla para servicios a terceros.",
+    "La encuesta intermedia se envía al pagar la parte 4 (Metodología) en SV-01 y SV-04, o al pagar el avance intermedio en los demás servicios (*).",
     "El levantamiento de observaciones «hasta después de la sustentación» necesita un límite escrito de rondas y plazo en la propuesta (M.01.03) para evitar retrabajo sin fin (*).",
-    "Falta registrar los montos (normal y oferta) y quién autoriza aplicar el precio oferta."
+    "Los precios no forman parte de los procesos: se manejan en la lista de precios (DO-M01-01). El precio oferta solo lo autoriza Henry."
   ],
   serviciosBrochure: ["Investigación aplicada", "Estudios y análisis técnicos", "Desarrollo experimental", "Prototipos y validación de soluciones", "Análisis e interpretación de datos", "Asesoría en trabajos de investigación"],
+
+  /* ======================= DIAGRAMAS DE FLUJO (estilo BPMN / Bizagi) =======================
+     carriles: roles. nodos: tipo inicio | fin | tarea | decision; carril (índice), col (columna), fila (0 arriba, 1 abajo),
+     ref: subproceso al que enlaza. flujos: de → a, con etiqueta opcional. */
+  diagramas: {
+    "M.01": {
+      titulo: "Gestión comercial: del contacto al caso abierto",
+      carriles: ["Cliente", "Henry (Gerencia)", "Teddy / especialista"],
+      nodos: [
+        { id: "i", tipo: "inicio", carril: 0, col: 0, txt: "Contacta a BLACKBELT" },
+        { id: "a1", tipo: "tarea", carril: 1, col: 1, txt: "Atender y registrar el contacto", ref: "M.01.01" },
+        { id: "a2", tipo: "tarea", carril: 1, col: 2, txt: "Meet de diagnóstico", ref: "M.01.02" },
+        { id: "a3", tipo: "tarea", carril: 2, col: 3, txt: "Opinar sobre viabilidad técnica (*)", ref: "M.01.02" },
+        { id: "g1", tipo: "decision", carril: 1, col: 4, txt: "¿Caso viable?" },
+        { id: "a4", tipo: "tarea", carril: 1, col: 5, txt: "Elaborar propuesta escrita (*)", ref: "M.01.03" },
+        { id: "r1", tipo: "tarea", carril: 1, col: 5, fila: 1, txt: "Comunicar rechazo o alternativa (*)", ref: "M.01.02" },
+        { id: "f2", tipo: "fin", carril: 1, col: 6, fila: 1, txt: "Caso no abierto" },
+        { id: "a5", tipo: "tarea", carril: 0, col: 6, txt: "Revisar la propuesta" },
+        { id: "g2", tipo: "decision", carril: 0, col: 7, txt: "¿Acepta?" },
+        { id: "a6", tipo: "tarea", carril: 1, col: 8, txt: "Firmar contrato, abrir grupo y carpeta", ref: "M.01.03" },
+        { id: "r2", tipo: "tarea", carril: 1, col: 8, fila: 1, txt: "Registrar motivo de no cierre (*)", ref: "M.01.03" },
+        { id: "f1", tipo: "fin", carril: 1, col: 9, txt: "Caso pasa a M.02" },
+        { id: "f3", tipo: "fin", carril: 1, col: 9, fila: 1, txt: "Caso no cerrado" }
+      ],
+      flujos: [
+        { de: "i", a: "a1" }, { de: "a1", a: "a2" }, { de: "a2", a: "a3" }, { de: "a3", a: "g1" },
+        { de: "g1", a: "a4", txt: "sí" }, { de: "g1", a: "r1", txt: "no" }, { de: "r1", a: "f2" },
+        { de: "a4", a: "a5" }, { de: "a5", a: "g2" }, { de: "g2", a: "a6", txt: "sí" }, { de: "g2", a: "r2", txt: "no" },
+        { de: "a6", a: "f1" }, { de: "r2", a: "f3" }
+      ],
+      notas: ["El precio oferta solo se aplica con autorización de Henry.", "La consulta de viabilidad a Teddy o a un especialista es propuesta (*)."]
+    },
+    "M.02": {
+      titulo: "Investigación y Desarrollo: desarrollo de cada parte o avance",
+      carriles: ["Henry (Gerencia)", "Teddy", "Especialista externo"],
+      nodos: [
+        { id: "i", tipo: "inicio", carril: 0, col: 0, txt: "Caso contratado (M.01)" },
+        { id: "a1", tipo: "tarea", carril: 0, col: 1, txt: "Planificar el caso por partes (*)", ref: "M.02.01" },
+        { id: "a2", tipo: "tarea", carril: 1, col: 2, txt: "Buscar información y antecedentes", ref: "M.02.02" },
+        { id: "g1", tipo: "decision", carril: 0, col: 3, txt: "¿Requiere especialista?" },
+        { id: "a3", tipo: "tarea", carril: 2, col: 4, txt: "Elaborar trabajo especializado", ref: "M.02.03" },
+        { id: "a4", tipo: "tarea", carril: 1, col: 4, txt: "Metodología y análisis", ref: "M.02.03" },
+        { id: "a5", tipo: "tarea", carril: 1, col: 5, txt: "Redacción y formato", ref: "M.02.04" },
+        { id: "a6", tipo: "tarea", carril: 0, col: 6, txt: "Revisión técnica", ref: "M.02.05" },
+        { id: "a7", tipo: "tarea", carril: 0, col: 7, txt: "Reporte %SIM (Turnitin) e %IA (JustDone)", ref: "M.02.05" },
+        { id: "g2", tipo: "decision", carril: 0, col: 8, txt: "¿Cumple?" },
+        { id: "a8", tipo: "tarea", carril: 0, col: 9, txt: "Aprobar y enviar el avance (M.07)", ref: "M.07.01" },
+        { id: "g3", tipo: "decision", carril: 0, col: 10, txt: "¿Quedan partes?" },
+        { id: "f1", tipo: "fin", carril: 0, col: 11, txt: "Cierre en M.07" }
+      ],
+      flujos: [
+        { de: "i", a: "a1" }, { de: "a1", a: "a2" }, { de: "a2", a: "g1" },
+        { de: "g1", a: "a3", txt: "sí" }, { de: "g1", a: "a4", txt: "no" }, { de: "a3", a: "a5" }, { de: "a4", a: "a5" },
+        { de: "a5", a: "a6" }, { de: "a6", a: "a7" }, { de: "a7", a: "g2" },
+        { de: "g2", a: "a8", txt: "sí" }, { de: "g2", a: "a5", txt: "no, corregir" },
+        { de: "a8", a: "g3" }, { de: "g3", a: "f1", txt: "no" }, { de: "g3", a: "a2", txt: "sí, siguiente parte" }
+      ],
+      notas: ["Si el trabajo es del especialista, la revisión técnica la hace un revisor competente en la materia (*).", "Los servicios SV-01 y SV-04 tienen 7 partes; SV-02 y SV-03 avanzan por avances; SV-05 son sesiones por horas."]
+    },
+    "M.07": {
+      titulo: "Entrega, cobro por partes, encuestas y cierre",
+      carriles: ["Henry (Gerencia)", "Cliente", "Mejora Continua (Johann)"],
+      nodos: [
+        { id: "i", tipo: "inicio", carril: 0, col: 0, txt: "Avance aprobado (M.02)" },
+        { id: "a1", tipo: "tarea", carril: 0, col: 1, txt: "Enviar avance por WhatsApp", ref: "M.07.01" },
+        { id: "a2", tipo: "tarea", carril: 1, col: 2, txt: "Revisar el avance" },
+        { id: "g1", tipo: "decision", carril: 1, col: 3, txt: "¿Tiene observaciones?" },
+        { id: "a3", tipo: "tarea", carril: 0, col: 4, txt: "Registrar ronda y corregir en M.02 (*)", ref: "M.07.02" },
+        { id: "a4", tipo: "tarea", carril: 1, col: 4, fila: 1, txt: "Pagar la parte", ref: "M.07.01" },
+        { id: "a5", tipo: "tarea", carril: 0, col: 5, fila: 1, txt: "Emitir boleta electrónica", ref: "M.07.01" },
+        { id: "g2", tipo: "decision", carril: 0, col: 6, fila: 1, txt: "¿Parte 4 o avance medio?" },
+        { id: "a6", tipo: "tarea", carril: 2, col: 7, txt: "Enviar encuesta intermedia (*)", ref: "M.07.03" },
+        { id: "g3", tipo: "decision", carril: 0, col: 8, fila: 1, txt: "¿Última parte?" },
+        { id: "f2", tipo: "fin", carril: 0, col: 9, fila: 1, txt: "Siguiente parte en M.02" },
+        { id: "a7", tipo: "tarea", carril: 1, col: 9, txt: "Dar conformidad (*)", ref: "M.07.04" },
+        { id: "a8", tipo: "tarea", carril: 2, col: 10, txt: "Enviar encuesta final (Google Forms)", ref: "M.07.03" },
+        { id: "a9", tipo: "tarea", carril: 0, col: 11, txt: "Archivar expediente y pedir referido (*)", ref: "M.07.04" },
+        { id: "f1", tipo: "fin", carril: 0, col: 12, txt: "Caso cerrado" }
+      ],
+      flujos: [
+        { de: "i", a: "a1" }, { de: "a1", a: "a2" }, { de: "a2", a: "g1" },
+        { de: "g1", a: "a3", txt: "sí" }, { de: "a3", a: "a1", txt: "nueva entrega" }, { de: "g1", a: "a4", txt: "no" },
+        { de: "a4", a: "a5" }, { de: "a5", a: "g2" }, { de: "g2", a: "a6", txt: "sí" }, { de: "g2", a: "g3", txt: "no" }, { de: "a6", a: "g3" },
+        { de: "g3", a: "f2", txt: "no" }, { de: "g3", a: "a7", txt: "sí" }, { de: "a7", a: "a8" }, { de: "a8", a: "a9" }, { de: "a9", a: "f1" }
+      ],
+      notas: ["La encuesta intermedia se envía al pagar la parte 4 (Metodología) en SV-01 y SV-04, o al pagar el avance intermedio en los demás servicios (*).", "Si el cliente paga todo al final, la encuesta intermedia se envía al entregar el avance intermedio."]
+    }
+  },
 
   /* Documentos y formatos */
   documentos: [
@@ -538,6 +627,7 @@ window.BB = {
     { version: "0.1", fecha: "21/11/2026", cambio: "Mapa general, inventario e indicadores candidatos.", estado: "Borrador" },
     { version: "0.2", fecha: "21/11/2026", cambio: "Datos de SUNAT, BLACKBELT Institute (M.08), ficha M.01.", estado: "Mapa validado por Henry" },
     { version: "0.3", fecha: "22/11/2026", cambio: "Portafolio web con modelo UNHEVAL: niveles 0-1-2, fichas técnicas, fichas de indicador, interrelación y documentos.", estado: "Borrador" },
-    { version: "0.4", fecha: "22/11/2026", cambio: "Catálogo de 5 servicios de M.02 con lo que incluye, pagos por partes y reportes de %SIM e %IA; indicadores M.02.I05 y M.02.I06.", estado: "Borrador" }
+    { version: "0.5", fecha: "22/11/2026", cambio: "Catálogo de 5 servicios de M.02 con lo que incluye, pagos por partes y reportes de %SIM e %IA; indicadores M.02.I05 y M.02.I06.", estado: "Borrador" },
+    { version: "0.5", fecha: "22/11/2026", cambio: "Diagramas de flujo con carriles (estilo BPMN) de M.01, M.02 y M.07; precios fuera de los procesos; encuesta intermedia en la parte 4; herramientas Turnitin y JustDone.", estado: "Borrador" }
   ]
 };

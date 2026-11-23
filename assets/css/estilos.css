@@ -192,3 +192,22 @@ h1:focus,h1:focus-visible{outline:none}
 .sv-head{display:flex;justify-content:space-between;align-items:center}
 .partes li{margin-bottom:2px}
 @media (max-width:760px){.grid-servicios{grid-template-columns:1fr}}
+/* Diagramas BPMN */
+.bpmn{margin:0;background:#fff;border:1px solid var(--linea);border-radius:10px;padding:14px}
+.bpmn figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-bottom:10px} .bpmn figcaption span{font-size:.85rem;color:var(--suave)}
+.bpmn svg{display:block;font-family:Inter,sans-serif}
+.carril1{fill:#FFFFFF;stroke:#CFCBC0} .carril2{fill:#FAF8F3;stroke:#CFCBC0} .carril-cab{fill:#0B0B0B}
+.carril-txt{fill:#F0C358;font-size:12px;font-weight:600;text-anchor:middle;dominant-baseline:central}
+.flujo{fill:none;stroke:#55554F;stroke-width:1.4} .flecha{fill:#55554F}
+.flujo-txt{fill:#7A5A12;font-size:11px;font-weight:600}
+.tarea{fill:#FFF8E6;stroke:#B8892A;stroke-width:1.4} .tarea.propuesta{stroke-dasharray:5 4;fill:#FFFDF6}
+.tarea.enlace{cursor:pointer} a:hover .tarea{fill:#F9E7B5}
+.tarea-txt{fill:#1A1A1A;font-size:11.5px} .nodo-txt{fill:#3d3d3a;font-size:11px}
+.compuerta{fill:#FFF1CC;stroke:#B8892A;stroke-width:1.4} .compuerta-x{fill:#7A5A12;font-size:18px;font-weight:700}
+.ev-inicio{fill:#EAF5EF;stroke:#1F7A4D;stroke-width:1.6} .ev-fin{fill:#FCEBEB;stroke:#A32D2D;stroke-width:3.2}
+.bpmn-ley{display:flex;flex-wrap:wrap;gap:14px;font-size:.8rem;color:var(--suave);margin-top:10px}
+.bpmn-ley i{display:inline-block;vertical-align:middle;margin-right:5px}
+.bpmn-ley .ev-i{width:14px;height:14px;border-radius:50%;border:2px solid #1F7A4D;background:#EAF5EF}
+.bpmn-ley .ev-f{width:14px;height:14px;border-radius:50%;border:3px solid #A32D2D;background:#FCEBEB}
+.bpmn-ley .ta{width:22px;height:14px;border-radius:4px;border:1.5px solid #B8892A;background:#FFF8E6} .bpmn-ley .ta.pr{border-style:dashed}
+.bpmn-ley .dc{width:12px;height:12px;transform:rotate(45deg);border:1.5px solid #B8892A;background:#FFF1CC}

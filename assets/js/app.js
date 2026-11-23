@@ -28,6 +28,63 @@
   const color = (p) => (D.unidades[p.cod] ? ` style="--u:${D.unidades[p.cod]}"` : "");
   const migas = (arr) => `<nav class="migas" aria-label="Ruta">${[["#/", "Inicio"], ...arr].map(([h, t], k, a) => (k < a.length - 1 ? `<a href="${h}">${esc(t)}</a>` : `<span aria-current="page">${esc(t)}</span>`)).join('<span class="sep">›</span>')}</nav>`;
 
+  /* ---------- Diagrama de flujo con carriles (estilo BPMN / Bizagi) ---------- */
+  function envolver(t, max) {
+    const pal = String(t).split(/\s+/), out = []; let l = "";
+    pal.forEach((w) => { if ((l + " " + w).trim().length > max && l) { out.push(l); l = w; } else l = (l + " " + w).trim(); });
+    if (l) out.push(l); return out;
+  }
+  function diagrama(cod) {
+    const g = D.diagramas && D.diagramas[cod]; if (!g) return "";
+    const LW = 46, CW = 156, LH = 176, TW = 132, TH = 58, DR = 28, ER = 15;
+    const cols = Math.max(...g.nodos.map((n) => n.col)) + 1;
+    const W = LW + cols * CW + 16, H = g.carriles.length * LH;
+    const pos = {}; g.nodos.forEach((n) => { pos[n.id] = { n, x: LW + n.col * CW + CW / 2, y: n.carril * LH + (n.fila ? 128 : 60) }; });
+    const ext = (p) => (p.n.tipo === "tarea" ? [TW / 2, TH / 2] : p.n.tipo === "decision" ? [DR, DR] : [ER, ER]);
+    const L = (p) => p.x - ext(p)[0], R = (p) => p.x + ext(p)[0], T = (p) => p.y - ext(p)[1], B = (p) => p.y + ext(p)[1];
+    let svg = "", vuelta = 0;
+    g.carriles.forEach((c, k) => {
+      const y = k * LH;
+      svg += `<rect x="0" y="${y}" width="${W}" height="${LH}" class="${k % 2 ? "carril2" : "carril1"}"/><rect x="0" y="${y}" width="${LW}" height="${LH}" class="carril-cab"/>`;
+      svg += `<text x="${LW / 2}" y="${y + LH / 2}" class="carril-txt" transform="rotate(-90 ${LW / 2} ${y + LH / 2})">${esc(c)}</text>`;
+    });
+    g.flujos.forEach((f) => {
+      const a = pos[f.de], b = pos[f.a]; if (!a || !b) return;
+      let d, lx, ly, anc = "start";
+      if (b.n.col > a.n.col) {
+        if (Math.abs(a.y - b.y) < 1) { d = `M${R(a)} ${a.y} H${L(b) - 2}`; }
+        else { const xm = Math.round(L(b) - 18); d = `M${R(a)} ${a.y} H${xm} V${b.y} H${L(b) - 2}`; }
+        lx = L(b) - 20; ly = b.y - 6; anc = "end";
+      } else if (b.n.col === a.n.col) {
+        d = b.y > a.y ? `M${a.x} ${B(a)} V${T(b) - 2}` : `M${a.x} ${T(a)} V${B(b) + 2}`; lx = a.x + 6; ly = (a.y + b.y) / 2;
+      } else {
+        const yr = Math.min(a.n.carril, b.n.carril) * LH + 14 + 7 * vuelta++;
+        d = `M${a.x} ${T(a)} V${yr} H${b.x} V${T(b) - 2}`; lx = b.x + 6; ly = yr - 4;
+      }
+      svg += `<path d="${d}" class="flujo" marker-end="url(#fl-${cod})"/>`;
+      if (f.txt) svg += `<text x="${lx}" y="${ly}" class="flujo-txt" text-anchor="${anc}">${esc(f.txt)}</text>`;
+    });
+    g.nodos.forEach((n) => {
+      const p = pos[n.id]; let s = "";
+      const lineas = (arr, y0, cls) => arr.map((l, k) => `<text x="${p.x}" y="${y0 + k * 13}" class="${cls}" text-anchor="middle">${prop(l).replace(/<span[^>]*>propuesto<\/span>/, "")}</text>`).join("");
+      if (n.tipo === "tarea") {
+        const ls = envolver(n.txt.replace("(*)", "").trim(), 20), propuesto = n.txt.includes("(*)");
+        s = `<rect x="${L(p)}" y="${T(p)}" width="${TW}" height="${TH}" rx="9" class="tarea${propuesto ? " propuesta" : ""}${n.ref ? " enlace" : ""}"/>` + lineas(ls, p.y - (ls.length - 1) * 6.5 + 4, "tarea-txt");
+        if (n.ref) s = `<a href="#/p/${n.ref}"><title>${esc(n.ref + " " + (N1[n.ref] ? N1[n.ref].n.nombre : ""))}</title>${s}</a>`;
+      } else if (n.tipo === "decision") {
+        s = `<polygon points="${p.x},${T(p)} ${R(p)},${p.y} ${p.x},${B(p)} ${L(p)},${p.y}" class="compuerta"/><text x="${p.x}" y="${p.y + 6}" class="compuerta-x" text-anchor="middle">×</text>` + lineas(envolver(n.txt, 22), B(p) + 14, "nodo-txt");
+      } else {
+        s = `<circle cx="${p.x}" cy="${p.y}" r="${ER}" class="${n.tipo === "inicio" ? "ev-inicio" : "ev-fin"}"/>` + lineas(envolver(n.txt, 20), B(p) + 14, "nodo-txt");
+      }
+      svg += `<g>${s}</g>`;
+    });
+    return `<figure class="bpmn"><figcaption><b>Diagrama de flujo · ${esc(g.titulo)}</b><span>Haga clic en una actividad para abrir su subproceso. Borde punteado = actividad propuesta.</span></figcaption>
+      <div class="scroll"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc("Diagrama de flujo de " + cod + ": " + g.titulo)}">
+      <defs><marker id="fl-${cod}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="flecha"/></marker></defs>${svg}</svg></div>
+      <div class="bpmn-ley"><span><i class="ev-i"></i>Inicio</span><span><i class="ev-f"></i>Fin</span><span><i class="ta"></i>Actividad</span><span><i class="ta pr"></i>Actividad propuesta</span><span><i class="dc"></i>Decisión</span></div>
+      ${(g.notas || []).length ? `<ul class="muted">${g.notas.map((x) => `<li>${prop(x)}</li>`).join("")}</ul>` : ""}</figure>`;
+  }
+
   /* ---------- Vistas ---------- */
   function vInicio() {
     const n = D.procesos.length, ops = D.procesos.filter((p) => p.estado === "op").length;
@@ -39,6 +96,7 @@
       ["#/interrelacion", "Interrelación", "Qué entrega cada proceso a los demás.", "red"],
       ["#/servicios", "Servicios de investigación", `${D.servicios.length} servicios de M.02: qué incluye cada uno, pagos por partes y subprocesos.`, "lupa"],
       ["#/documentos", "Documentos y formatos", "Fichas, formatos y contratos con su estado.", "doc"],
+      ["#/p/M.02", "Diagramas de flujo", "M.01, M.02 y M.07 con carriles por rol, estilo BPMN.", "red"],
       ["#/plan", "Plan de estandarización", "Fases, avance y control de cambios.", "plan"]
     ];
     return `<section class="hero">
@@ -121,6 +179,9 @@
       <h2>Descripción del proceso</h2>
       <div class="scroll"><table class="tabla sipoc"><thead><tr><th>Proveedores</th><th>Entradas</th><th>Procesos nivel 1</th><th>Productos</th><th>Clientes</th></tr></thead><tbody>
       ${(p.sipoc || []).map((s) => `<tr><td>${autolink(s.prov)}</td><td>${prop(s.ent)}</td><td class="sub">${autolink(s.sub)}</td><td>${prop(s.prod)}</td><td>${autolink(s.cli)}</td></tr>`).join("")}</tbody></table></div>
+
+      <h2>Diagrama de flujo</h2>
+      ${D.diagramas && D.diagramas[cod] ? diagrama(cod) : '<p class="muted">Por elaborar en la fase que corresponde a este proceso (ver <a href="#/plan">plan</a>).</p>'}
 
       <h2>Procesos de nivel 1</h2>
       <div class="n1-grid">${(p.nivel1 || []).map((n) => `<a class="n1" href="#/p/${n.cod}"><span class="cod">${n.cod}</span><b>${esc(n.nombre)}</b><span>${esc(n.objetivo || "")}</span><span class="cnt">${(n.nivel2 || []).length || "—"} actividades</span></a>`).join("")}</div>
@@ -209,15 +270,14 @@
     const tarjeta = (s) => `<article class="servicio card" id="${esc(s.cod)}">
       <div class="sv-head"><span class="cod">${esc(s.cod)}</span>${docb(s.estado)}</div>
       <h3>${esc(s.nombre)}</h3>${s.requisito ? `<p class="muted">Requisito: ${esc(s.requisito)}</p>` : ""}
-      <table class="tabla kv"><tr><th>Cotización</th><td>${esc(s.precioModo)}</td></tr><tr><th>Precio</th><td>${esc(s.precio)}</td></tr></table>
       <h4>Incluye</h4><ul>${s.incluye.map((x) => `<li>${prop(x)}</li>`).join("")}</ul>
       ${s.partes.length ? `<h4>Pago por partes · ${s.partes.length} entregables</h4><ol class="partes">${s.partes.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>` : ""}
       <h4>Subprocesos que aplica</h4><div class="chips">${s.subprocesos.map(sub).join("")}</div></article>`;
     const conPartes = D.servicios.filter((s) => s.partes.length).map((s) => s.cod).join(" y ");
     return `${migas([["#/p/M.02", "M.02"], ["#/servicios", "Servicios"]])}<h1>Servicios de investigación (M.02)</h1>
-    <p class="lead">Catálogo vigente de ${D.servicios.length} servicios según la lista de precios de BLACKBELT. ${conPartes} se pueden pagar por partes: cada parte es un entregable con su cobro.</p>
-    <div class="scroll"><table class="tabla"><thead><tr><th>Código</th><th>Servicio</th><th>Cotización</th><th>Pago por partes</th><th>Reportes %SIM e %IA</th></tr></thead><tbody>
-    ${D.servicios.map((s) => `<tr><td><a href="#${esc(s.cod)}" data-ir="${esc(s.cod)}">${esc(s.cod)}</a></td><td>${esc(s.nombre)}</td><td>${esc(s.precioModo)}</td><td>${s.partes.length ? s.partes.length + " partes" : "No"}</td><td>${s.incluye.some((x) => /%SIM/.test(x)) ? "Sí, en cada avance" : "No incluido"}</td></tr>`).join("")}</tbody></table></div>
+    <p class="lead">Catálogo vigente de ${D.servicios.length} servicios. Los precios no forman parte del proceso: están en la lista de precios (DO-M01-01) y la oferta la autoriza Henry. ${conPartes} se pueden pagar por partes: cada parte es un entregable con su cobro.</p>
+    <div class="scroll"><table class="tabla"><thead><tr><th>Código</th><th>Servicio</th><th>Pago por partes</th><th>Reportes %SIM e %IA</th></tr></thead><tbody>
+    ${D.servicios.map((s) => `<tr><td><a href="#${esc(s.cod)}" data-ir="${esc(s.cod)}">${esc(s.cod)}</a></td><td>${esc(s.nombre)}</td><td>${s.partes.length ? s.partes.length + " partes" : "No"}</td><td>${s.incluye.some((x) => /%SIM/.test(x)) ? "Sí, en cada avance" : "No incluido"}</td></tr>`).join("")}</tbody></table></div>
     <div class="grid-servicios">${D.servicios.map(tarjeta).join("")}</div>
     <h2>Observaciones de mejora</h2><ul>${D.serviciosNotas.map((x) => `<li>${autolink(x)}</li>`).join("")}</ul>
     <h2>Oferta publicada en el brochure</h2><ul class="cols">${D.serviciosBrochure.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
