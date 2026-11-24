@@ -532,7 +532,7 @@ window.BB = {
       ],
       flujos: [
         { de: "i", a: "a1" }, { de: "a1", a: "a2" }, { de: "a2", a: "a3" }, { de: "a3", a: "g1" },
-        { de: "g1", a: "a4", txt: "sí" }, { de: "g1", a: "r1", txt: "no" }, { de: "r1", a: "a4", txt: "alternativa" },
+        { de: "g1", a: "a4", txt: "sí" }, { de: "g1", a: "r1", txt: "no" }, { de: "r1", a: "a4" },
         { de: "a4", a: "a5" }, { de: "a5", a: "g2" }, { de: "g2", a: "a6", txt: "sí" }, { de: "g2", a: "r2", txt: "no" },
         { de: "a6", a: "f1" }, { de: "r2", a: "f3" }
       ],
