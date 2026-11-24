@@ -20,7 +20,7 @@ window.BB = {
     empresa: "BLACKBELT GROUP S.A.C.",
     ruc: "20616527704",
     domicilio: "Cal. Huayllabamba 192, Coop. Veintisiete de Abril, Ate, Lima",
-    version: "0.5",
+    version: "0.6",
     fecha: "22/11/2026",
     elaboro: "Johann Herrera (Mejora Continua)",
     aprueba: "Henry (Gerencia General)",
@@ -110,7 +110,7 @@ window.BB = {
       objetivo: "Atraer clientes potenciales a BLACKBELT y a BLACKBELT Institute con una marca coherente y canales medidos.",
       alcance: "Desde la planificación de contenidos y campañas hasta la entrega del contacto a M.01 (o a M.08 en el Institute).",
       inicio: "Plan de contenidos o campaña.", fin: "Contacto entregado a gestión comercial.",
-      situacion: "Los clientes llegan por referidos, redes sociales y campañas de Facebook Ads. BLACKBELT es solo virtual; el Institute hará marketing presencial y virtual. No se mide el origen de cada cliente.",
+      situacion: "Los clientes llegan por Facebook, WhatsApp e Instagram (según dónde se pauta) y por referidos; TikTok no trae clientes porque no se promociona para ventas. Hay campañas de Facebook Ads. BLACKBELT es solo virtual; el Institute hará marketing presencial y virtual. No se mide el origen de cada cliente.",
       nivel1: [
         { cod: "E.03.01", nombre: "Gestión de marca y contenidos", objetivo: "Mantener la identidad y publicar contenidos.", nivel2: [
           { cod: "E.03.01.P01", nombre: "Calendario de contenidos (*)" }, { cod: "E.03.01.P02", nombre: "Publicación en redes y web" } ] },
@@ -150,7 +150,7 @@ window.BB = {
       ],
       requisitos: ["Código Civil peruano (contratos de locación de servicios) — por validar"],
       controles: ["Acuerdo escrito antes de iniciar un proyecto con aliado (*)"],
-      recursos: { humanos: ["Henry"], sistemas: ["Google Drive"], instalaciones: ["Virtual"], equipos: ["Computadora"] },
+      recursos: { humanos: ["Henry", "Teddy (consigue aliados para ciertos proyectos)"], sistemas: ["Google Drive"], instalaciones: ["Virtual"], equipos: ["Computadora"] },
       indicadores: ["E.04.I01"],
       salidas: [ { a: "M.05", que: "Proyectos de aliados para apoyar" }, { a: "S.02", que: "Especialistas disponibles" } ],
       riesgos: [ { r: "Responsabilidad ante el cliente por un trabajo del aliado", c: "Revisión técnica competente antes de entregar (M.02.05)" } ],
@@ -159,57 +159,58 @@ window.BB = {
 
     /* ======================= MISIONALES ======================= */
     {
-      cod: "M.01", tipo: "M", nombre: "Gestión comercial y de acuerdos", dueno: "Henry", estado: "op", doc: "Borrador", version: "0.2", prioridad: true,
-      objetivo: "Convertir a un cliente interesado en un caso con alcance, precio y plazo acordados por escrito antes de iniciar el trabajo.",
+      cod: "M.01", tipo: "M", nombre: "Gestión comercial y de acuerdos", dueno: "Henry", estado: "op", doc: "Borrador", version: "0.3", prioridad: true,
+      objetivo: "Convertir a un cliente interesado en un caso con servicio, cotización, cronograma y condiciones acordados por escrito antes de iniciar el trabajo.",
       alcance: "Hoy solo el servicio de investigación (M.02). Se aplicará a las demás unidades cuando operen.",
-      inicio: "El cliente potencial hace el primer contacto (referido, redes o Facebook Ads).", fin: "Contrato firmado y grupo de WhatsApp del caso creado; el caso pasa a M.02.",
-      situacion: "Henry atiende el contacto, hace un Meet, acuerda casi todo verbalmente, fija el precio caso por caso según la lista de precios, firma el contrato general (título del proyecto y nombre del cliente) y crea el grupo de WhatsApp. El cierre toma 1 a 3 días. La conversión no se mide.",
+      inicio: "El cliente potencial escribe por Facebook, WhatsApp o Instagram (según dónde se pautó) o llega referido.", fin: "Contrato firmado en PDF y grupo de WhatsApp del caso creado; el caso pasa a M.02.",
+      situacion: "Confirmado por Henry (24/11/2026): los clientes llegan sobre todo por Facebook, WhatsApp e Instagram, según dónde se pauta; TikTok no trae clientes porque no se promociona para ventas. Un mensaje automático da la primera respuesta y luego Henry responde en menos de 3 minutos. Antes del Meet se piden nombre, carrera, universidad, nivel (pregrado o posgrado) e investigación; en el Meet se precisa la problemática (por ejemplo, investigación rechazada o con mucho %IA). Casi todos los casos se cierran por Meet; solo uno se cerró por WhatsApp. No se rechazan casos: siempre se ofrece una solución y el cliente decide. El contrato, firmado en PDF, incluye la cotización y el cronograma. Henry crea el grupo de WhatsApp. Hubo un caso sin contrato, que Henry reconoce como error. La conversión no se mide.",
       nivel1: [
-        { cod: "M.01.01", nombre: "Captación y registro del contacto", dueno: "Henry (Jeferson en campañas)", objetivo: "Atender y registrar cada contacto con su origen.",
-          entradas: ["Mensaje del cliente potencial"], salidas: ["Contacto registrado con canal de origen"], registros: ["FO-M01-01 Registro de contactos (*)"],
-          nivel2: [ { cod: "M.01.01.P01", nombre: "Recepción y primera respuesta" }, { cod: "M.01.01.P02", nombre: "Registro del contacto y su canal (*)" } ] },
-        { cod: "M.01.02", nombre: "Diagnóstico y viabilidad", dueno: "Henry", objetivo: "Entender el caso y decidir si se puede cumplir antes de ofertar.",
-          entradas: ["Contacto registrado", "Datos del caso: tema, institución, avance, plazos, requisitos de similitud"], salidas: ["Caso viable, viable con ajustes o rechazado"], registros: ["FO-M01-02 Ficha de diagnóstico (*)"],
-          nivel2: [ { cod: "M.01.02.P01", nombre: "Reunión Meet de diagnóstico" }, { cod: "M.01.02.P02", nombre: "Evaluación de viabilidad (información disponible, plazo, competencias, especialista) (*)" }, { cod: "M.01.02.P03", nombre: "Rechazo o alternativa por escrito (*)" } ] },
-        { cod: "M.01.03", nombre: "Propuesta y contrato", dueno: "Henry", objetivo: "Dejar por escrito lo acordado y abrir el caso.",
-          entradas: ["Caso viable", "Referencia de precios (*)"], salidas: ["Contrato firmado", "Grupo de WhatsApp y carpeta del caso"], registros: ["FO-M01-03 Propuesta de servicio (*)", "Contrato general (existe)"],
-          nivel2: [ { cod: "M.01.03.P01", nombre: "Propuesta escrita: servicio, alcance, entregables, plazos, revisiones, cambios y forma de pago (*); el precio oferta lo autoriza Henry" }, { cod: "M.01.03.P02", nombre: "Aceptación del cliente" }, { cod: "M.01.03.P03", nombre: "Contrato y apertura del caso (grupo y carpeta en Drive)" } ] }
+        { cod: "M.01.01", nombre: "Captación y primera respuesta", dueno: "Henry", objetivo: "Responder rápido y registrar cada contacto con su canal de origen.",
+          entradas: ["Mensaje del cliente por Facebook, WhatsApp o Instagram", "Referidos"], salidas: ["Contacto atendido y registrado con canal de origen"], registros: ["Mensaje automático de bienvenida (existe)", "FO-M01-01 Registro de contactos (*)"],
+          nivel2: [ { cod: "M.01.01.P01", nombre: "Respuesta automática de bienvenida" }, { cod: "M.01.01.P02", nombre: "Respuesta de Henry en menos de 3 minutos" }, { cod: "M.01.01.P03", nombre: "Datos previos: nombre, carrera, universidad, pregrado o posgrado e investigación" }, { cod: "M.01.01.P04", nombre: "Registro del contacto y su canal (*)" } ] },
+        { cod: "M.01.02", nombre: "Diagnóstico en Meet y viabilidad", dueno: "Henry", objetivo: "Entender la problemática y comprobar que lo que se promete se puede cumplir.",
+          entradas: ["Datos previos del cliente", "Problemática: investigación rechazada, observaciones, alto %IA o %SIM, falta de avance"], salidas: ["Solución propuesta al cliente", "Alcance que se puede cumplir"], registros: ["FO-M01-02 Ficha de diagnóstico (*)"],
+          nivel2: [ { cod: "M.01.02.P01", nombre: "Reunión Meet de diagnóstico de la problemática" }, { cod: "M.01.02.P02", nombre: "Verificación de viabilidad antes de prometer cantidades o resultados (búsqueda preliminar si se piden antecedentes) (*)" }, { cod: "M.01.02.P03", nombre: "Propuesta de solución y servicio del catálogo (SV-01 a SV-05)" } ] },
+        { cod: "M.01.03", nombre: "Contrato y apertura del caso", dueno: "Henry", objetivo: "Dejar por escrito lo acordado y abrir el caso.",
+          entradas: ["Solución aceptada por el cliente", "Lista de precios (DO-M01-01)"], salidas: ["Contrato firmado en PDF con cotización y cronograma", "Grupo de WhatsApp y carpeta del caso"], registros: ["CT-S04-01 Contrato general (existe)", "FO-M01-03 Anexo de condiciones (*)"],
+          nivel2: [ { cod: "M.01.03.P01", nombre: "Contrato con cotización y cronograma (el precio oferta lo autoriza Henry)" }, { cod: "M.01.03.P02", nombre: "Anexo con partes, rondas de corrección y tratamiento de cambios (*)" }, { cod: "M.01.03.P03", nombre: "Firma del contrato en PDF" }, { cod: "M.01.03.P04", nombre: "Creación del grupo de WhatsApp (Henry) y de la carpeta en Drive (*)" } ] }
       ],
       sipoc: [
-        { prov: "E.03 Marca y marketing / referidos", ent: "Contacto del cliente potencial", sub: "M.01.01", prod: "Contacto registrado con canal", cli: "E.03 (medición)" },
-        { prov: "Cliente", ent: "Datos y requisitos del caso", sub: "M.01.02", prod: "Ficha de diagnóstico y decisión de viabilidad", cli: "Henry, M.02" },
-        { prov: "S.01 Finanzas", ent: "Referencia de precios y costos", sub: "M.01.03", prod: "Propuesta aceptada", cli: "Cliente" },
-        { prov: "S.04 Legal", ent: "Modelo de contrato general", sub: "M.01.03", prod: "Contrato firmado y caso abierto", cli: "Cliente, M.02, S.01, S.03" }
+        { prov: "E.03 Marca y marketing / referidos", ent: "Mensaje del cliente por Facebook, WhatsApp o Instagram", sub: "M.01.01", prod: "Contacto atendido con datos previos y canal", cli: "E.03 (medición)" },
+        { prov: "Cliente", ent: "Problemática de su investigación", sub: "M.01.02", prod: "Solución y servicio propuestos", cli: "Cliente" },
+        { prov: "S.04 Legal / lista de precios", ent: "Modelo de contrato y precios", sub: "M.01.03", prod: "Contrato firmado con cotización y cronograma", cli: "Cliente, M.02, S.01" },
+        { prov: "Henry", ent: "Contrato firmado", sub: "M.01.03", prod: "Grupo de WhatsApp y carpeta del caso", cli: "M.02, S.03" }
       ],
       requisitos: ["Código Civil peruano (contratos) — por validar", "Ley N.° 29571, Código de Protección y Defensa del Consumidor — por validar", "Ley N.° 29733, Protección de Datos Personales — por validar"],
-      controles: ["Evaluación de viabilidad antes de ofertar (*)", "Propuesta aceptada por escrito antes del contrato (*)", "El precio oferta solo se aplica con autorización de Henry", "El contrato aclara que no se garantiza la aprobación institucional ni un porcentaje de similitud (*)", "Registro del motivo de cada caso no cerrado (*)"],
-      recursos: { humanos: ["Henry", "Teddy o especialista (consulta de viabilidad)"], sistemas: ["Google Meet", "WhatsApp", "Google Drive", "Sistema propio de costos"], instalaciones: ["Trabajo virtual"], equipos: ["Computadora, celular"] },
-      indicadores: ["M.01.I01", "M.01.I02", "M.01.I03", "M.01.I04"],
-      salidas: [ { a: "M.02", que: "Caso contratado con alcance acordado" }, { a: "S.01", que: "Precio y forma de pago" }, { a: "S.03", que: "Carpeta del caso" }, { a: "E.03", que: "Canal de origen de los clientes" } ],
+      controles: ["Respuesta automática y respuesta de Henry en menos de 3 minutos (existe)", "Ningún caso empieza sin contrato firmado (existe como regla; hubo una excepción)", "Contrato con cotización y cronograma (existe)", "El precio oferta solo se aplica con autorización de Henry", "Verificar viabilidad antes de prometer cantidades o resultados (*)", "Anexo con rondas de corrección y cambios (*)", "El contrato aclara que no se garantiza la aprobación institucional ni un %SIM o %IA determinado (*)", "Registro del canal de origen y del motivo de no cierre (*)"],
+      recursos: { humanos: ["Henry", "Teddy o especialista (consulta de viabilidad)"], sistemas: ["Facebook, WhatsApp, Instagram", "Mensaje automático", "Google Meet", "Google Drive", "Sistema propio de costos"], instalaciones: ["Trabajo virtual"], equipos: ["Computadora, celular"] },
+      indicadores: ["M.01.I01", "M.01.I02", "M.01.I05", "M.01.I03", "M.01.I04"],
+      salidas: [ { a: "M.02", que: "Caso contratado con cronograma" }, { a: "S.01", que: "Cotización y pagos por partes" }, { a: "S.03", que: "Contrato y carpeta del caso" }, { a: "E.03", que: "Canal de origen de los clientes" } ],
       riesgos: [
-        { r: "Comprometer un resultado imposible (caso A: 15 antecedentes pedidos, 1 encontrado; no se entregó ni cobró)", c: "Viabilidad y búsqueda preliminar antes de comprometer cantidades (*)" },
-        { r: "Aceptar un caso técnico sin revisor competente (caso B: memoria de cálculo tercerizada)", c: "Definir especialista y revisor en la viabilidad; incluir su costo en el precio (*)" },
-        { r: "Desacuerdo sobre lo pactado y retrabajo sin límite", c: "Propuesta escrita con número de revisiones y tratamiento de cambios (*)" }
+        { r: "Prometer un resultado que no se puede cumplir (caso A: 15 antecedentes pedidos, 1 encontrado; se habló con la cliente y no se cobró)", c: "Búsqueda preliminar antes de prometer cantidades y alternativa escrita si no se alcanza (*)" },
+        { r: "Aceptar un caso técnico sin revisor competente (caso B: memoria de cálculo tercerizada)", c: "Definir especialista y revisor en el diagnóstico; incluir su costo en la cotización (*)" },
+        { r: "Iniciar un caso sin contrato (ocurrió una vez)", c: "Regla: sin contrato firmado no se abre grupo ni se empieza (indicador S.04.I01)" },
+        { r: "Retrabajo sin límite", c: "Anexo con rondas de corrección y cambios (*)" }
       ],
-      pendientes: ["Medio por el que escribe primero el cliente y quién responde.", "Motivos por los que se ha rechazado un caso.", "Copia del contrato general sin datos personales."]
+      pendientes: ["Copia del contrato general sin datos personales, para ver qué falta (rondas, cambios, confidencialidad).", "Quién crea el grupo de WhatsApp cuando Henry no está disponible."]
     },
     {
-      cod: "M.02", tipo: "M", nombre: "Investigación y Desarrollo", dueno: "Henry (ejecuta con Teddy)", estado: "op", doc: "Borrador", version: "0.1", prioridad: true, unidad: true,
+      cod: "M.02", tipo: "M", nombre: "Investigación y Desarrollo", dueno: "Henry (asigna; ejecuta Henry o Teddy según especialidad)", estado: "op", doc: "Borrador", version: "0.1", prioridad: true, unidad: true,
       objetivo: "Desarrollar el servicio de investigación contratado con rigor metodológico, fuentes verificables y revisión competente, dentro del plazo acordado.",
       alcance: "Los 5 servicios del catálogo: tesis, plan de tesis, artículos, levantamiento de observaciones y asesoramiento por horas (ver catálogo). Aprox. 4–5 casos por mes.",
       inicio: "Caso contratado recibido de M.01.", fin: "Entregable aprobado internamente por Henry y enviado a M.07.",
-      situacion: "Henry y Teddy trabajan cada caso; si hace falta, se contrata un especialista. Henry revisa siempre antes de enviar. Los archivos viven en la computadora de Henry, el Drive y el grupo de WhatsApp. No hay secuencia uniforme ni entregables estándar.",
+      situacion: "Henry capta y atiende al cliente; luego los casos se reparten por especialidad: Henry toma los de ingeniería, Teddy los de química y biología, y las investigaciones descriptivas o correlacionales las puede tomar cualquiera. Si hace falta, se contrata un especialista; Teddy también consigue aliados para ciertos proyectos. Henry revisa siempre antes de enviar. Los archivos viven en la computadora de Henry, el Drive y el grupo de WhatsApp. No hay secuencia uniforme ni entregables estándar.",
       nivel1: [
         { cod: "M.02.01", nombre: "Planificación del caso", dueno: "Henry", objetivo: "Convertir lo contratado en un plan con entregables y fechas.",
           entradas: ["Contrato y propuesta aceptada", "Requisitos de la institución del cliente"], salidas: ["Plan del caso con cronograma de entregas"], registros: ["FO-M02-01 Plan del caso (*)"],
-          nivel2: [ { cod: "M.02.01.P01", nombre: "Revisión de requisitos de la institución (formato, similitud, plazos)" }, { cod: "M.02.01.P02", nombre: "Plan de trabajo y cronograma por partes o avances (*)" }, { cod: "M.02.01.P03", nombre: "Asignación del equipo y del especialista" } ] },
-        { cod: "M.02.02", nombre: "Búsqueda y gestión de información", dueno: "Teddy", objetivo: "Reunir antecedentes y fuentes verificables.",
+          nivel2: [ { cod: "M.02.01.P01", nombre: "Revisión de requisitos de la institución (formato, similitud, plazos)" }, { cod: "M.02.01.P02", nombre: "Plan de trabajo y cronograma por partes o avances (*)" }, { cod: "M.02.01.P03", nombre: "Asignación por especialidad: ingeniería → Henry; química y biología → Teddy; descriptivas o correlacionales → cualquiera; especialista si hace falta" } ] },
+        { cod: "M.02.02", nombre: "Búsqueda y gestión de información", dueno: "Responsable del caso (Henry o Teddy)", objetivo: "Reunir antecedentes y fuentes verificables.",
           entradas: ["Plan del caso"], salidas: ["Fuentes y antecedentes verificados"], registros: ["FO-M02-03 Registro de búsqueda (*)"],
           nivel2: [ { cod: "M.02.02.P01", nombre: "Búsqueda de antecedentes y fuentes" }, { cod: "M.02.02.P02", nombre: "Registro de bases consultadas, filtros y resultados (*)" } ] },
-        { cod: "M.02.03", nombre: "Metodología y análisis", dueno: "Henry / Teddy / especialista", objetivo: "Diseñar el método y analizar los datos.",
+        { cod: "M.02.03", nombre: "Metodología y análisis", dueno: "Responsable del caso o especialista", objetivo: "Diseñar el método y analizar los datos.",
           entradas: ["Fuentes", "Datos del cliente"], salidas: ["Metodología y resultados del análisis"], registros: ["Archivos de análisis en la carpeta del caso"],
           nivel2: [ { cod: "M.02.03.P01", nombre: "Diseño metodológico" }, { cod: "M.02.03.P02", nombre: "Procesamiento y análisis de datos" }, { cod: "M.02.03.P03", nombre: "Trabajo especializado tercerizado (cálculos, ensayos)" } ] },
-        { cod: "M.02.04", nombre: "Redacción y formato", dueno: "Henry / Teddy", objetivo: "Redactar y dar formato según la norma de la institución.",
+        { cod: "M.02.04", nombre: "Redacción y formato", dueno: "Responsable del caso (Henry o Teddy)", objetivo: "Redactar y dar formato según la norma de la institución.",
           entradas: ["Resultados", "Guía de la institución"], salidas: ["Borrador del entregable"], registros: ["Versión del entregable en Drive"],
           nivel2: [ { cod: "M.02.04.P01", nombre: "Redacción" }, { cod: "M.02.04.P02", nombre: "Formato y normas de citación" } ] },
         { cod: "M.02.05", nombre: "Revisión técnica y de similitud", dueno: "Henry", objetivo: "Verificar calidad técnica y requisitos antes de entregar.",
@@ -228,7 +229,7 @@ window.BB = {
       indicadores: ["M.02.I01", "M.02.I02", "M.02.I03", "M.02.I04", "M.02.I05", "M.02.I06"],
       salidas: [ { a: "M.07", que: "Entregable aprobado internamente" }, { a: "S.01", que: "Costo real del caso" }, { a: "S.03", que: "Versiones del entregable" } ],
       riesgos: [ { r: "Retrabajo por cambios sin límite", c: "Número de revisiones y cambios definidos en la propuesta (M.01.03)" }, { r: "Archivos solo en la computadora de Henry", c: "Expediente del caso en Drive con versiones (S.03)" } ],
-      pendientes: ["Un caso típico de inicio a fin: qué hace Henry, qué hace Teddy, cuándo entra el especialista y cuántas entregas parciales hay."]
+      pendientes: ["Duración típica de cada parte y si el cronograma se comparte con el cliente.", "Bases de datos y software que se usan.", "Cómo se elige y se paga al especialista y quién revisa su trabajo.", "Qué revisa Henry antes de enviar."]
     },
     {
       cod: "M.03", tipo: "M", nombre: "Ingeniería y Productividad", dueno: "Por definir", estado: "idea", doc: "Borrador", version: "0.1", unidad: true,
@@ -452,8 +453,9 @@ window.BB = {
     { cod: "E.03.I02", proceso: "E.03", nombre: "Costo de captación por Ads", finalidad: "Saber cuánto cuesta un cliente que llega por Ads.", formula: "Inversión en Facebook Ads ÷ contratos con origen Ads", responsable: "Jeferson y Henry", tipo: "Eficiencia", unidad: "S/ por cliente", fuente: "FO-M01-01 y gasto en Ads", frecuencia: "Mensual", meta: null },
     { cod: "E.04.I01", proceso: "E.04", nombre: "Conformidad de trabajos con aliados", finalidad: "Medir la calidad del trabajo conjunto.", formula: "Trabajos con aliado entregados conformes ÷ trabajos con aliado × 100", responsable: "Henry", tipo: "Calidad", unidad: "%", fuente: "Evaluación de aliados", frecuencia: "Semestral", meta: null },
     { cod: "M.01.I01", proceso: "M.01", clave: true, nombre: "Tasa de conversión", finalidad: "Saber cuántas reuniones terminan en contrato.", formula: "Contratos firmados ÷ reuniones Meet realizadas × 100", responsable: "Henry", tipo: "Eficacia", unidad: "%", fuente: "FO-M01-01 Registro de contactos", frecuencia: "Mensual", meta: null },
+    { cod: "M.01.I05", proceso: "M.01", nombre: "Tiempo de primera respuesta de Henry", finalidad: "Mantener la rapidez que hoy es una fortaleza.", formula: "Promedio de minutos entre la respuesta automática y la primera respuesta de Henry", responsable: "Henry", tipo: "Eficiencia", unidad: "minutos", fuente: "FO-M01-01 (hora de contacto y de respuesta)", frecuencia: "Mensual", meta: null, nota: "Referencia declarada: menos de 3 minutos." },
     { cod: "M.01.I02", proceso: "M.01", nombre: "Tiempo de cierre", finalidad: "Medir la rapidez comercial.", formula: "Promedio de días entre el primer contacto y la firma del contrato", responsable: "Henry", tipo: "Eficiencia", unidad: "días", fuente: "FO-M01-01", frecuencia: "Mensual", meta: null, nota: "Referencia actual declarada: 1 a 3 días." },
-    { cod: "M.01.I03", proceso: "M.01", nombre: "Casos con propuesta escrita", finalidad: "Comprobar que lo acordado queda por escrito.", formula: "Casos con propuesta aceptada por escrito ÷ contratos firmados × 100", responsable: "Johann (verificación)", tipo: "Calidad", unidad: "%", fuente: "FO-M01-03 y expedientes", frecuencia: "Mensual", meta: null },
+    { cod: "M.01.I03", proceso: "M.01", nombre: "Contratos completos", finalidad: "Comprobar que lo acordado queda por escrito.", formula: "Contratos con cotización, cronograma, rondas de corrección y cambios definidos ÷ contratos firmados × 100", responsable: "Johann (verificación)", tipo: "Calidad", unidad: "%", fuente: "Contratos en la carpeta del caso", frecuencia: "Mensual", meta: null },
     { cod: "M.01.I04", proceso: "M.01", nombre: "Precio promedio por caso", finalidad: "Seguir el ingreso medio por caso.", formula: "Suma de precios contratados ÷ contratos firmados", responsable: "Henry", tipo: "Eficiencia", unidad: "S/", fuente: "FO-M01-01", frecuencia: "Mensual", meta: null },
     { cod: "M.02.I01", proceso: "M.02", clave: true, nombre: "Aceptación en primera entrega", finalidad: "Medir la calidad del entregable a la primera.", formula: "Entregas aceptadas sin observaciones ÷ entregas realizadas × 100", responsable: "Henry", tipo: "Calidad", unidad: "%", fuente: "FO-M02-02 Control de entregas y revisiones", frecuencia: "Mensual", meta: null },
     { cod: "M.02.I02", proceso: "M.02", nombre: "Rondas de corrección por caso", finalidad: "Medir el retrabajo.", formula: "Total de rondas de corrección ÷ casos cerrados", responsable: "Henry", tipo: "Eficiencia", unidad: "rondas", fuente: "FO-M02-02", frecuencia: "Mensual", meta: null },
@@ -514,35 +516,34 @@ window.BB = {
       titulo: "Gestión comercial: del contacto al caso abierto",
       carriles: ["Cliente", "Henry (Gerencia)", "Teddy / especialista"],
       nodos: [
-        { id: "i", tipo: "inicio", carril: 0, col: 0, txt: "Contacta a BLACKBELT" },
-        { id: "a1", tipo: "tarea", carril: 1, col: 1, txt: "Atender y registrar el contacto", ref: "M.01.01" },
-        { id: "a2", tipo: "tarea", carril: 1, col: 2, txt: "Meet de diagnóstico", ref: "M.01.02" },
-        { id: "a3", tipo: "tarea", carril: 2, col: 3, txt: "Opinar sobre viabilidad técnica (*)", ref: "M.01.02" },
-        { id: "g1", tipo: "decision", carril: 1, col: 4, txt: "¿Caso viable?" },
-        { id: "a4", tipo: "tarea", carril: 1, col: 5, txt: "Elaborar propuesta escrita (*)", ref: "M.01.03" },
-        { id: "r1", tipo: "tarea", carril: 1, col: 5, fila: 1, txt: "Comunicar rechazo o alternativa (*)", ref: "M.01.02" },
-        { id: "f2", tipo: "fin", carril: 1, col: 6, fila: 1, txt: "Caso no abierto" },
-        { id: "a5", tipo: "tarea", carril: 0, col: 6, txt: "Revisar la propuesta" },
+        { id: "i", tipo: "inicio", carril: 0, col: 0, txt: "Escribe por Facebook, WhatsApp o Instagram" },
+        { id: "a1", tipo: "tarea", carril: 1, col: 1, txt: "Responder (automático + Henry en < 3 min) y pedir datos", ref: "M.01.01" },
+        { id: "a2", tipo: "tarea", carril: 1, col: 2, txt: "Meet: diagnóstico de la problemática", ref: "M.01.02" },
+        { id: "a3", tipo: "tarea", carril: 2, col: 3, txt: "Verificar viabilidad técnica (*)", ref: "M.01.02" },
+        { id: "g1", tipo: "decision", carril: 1, col: 4, txt: "¿Se puede cumplir lo pedido?" },
+        { id: "a4", tipo: "tarea", carril: 1, col: 5, txt: "Preparar contrato con cotización y cronograma", ref: "M.01.03" },
+        { id: "r1", tipo: "tarea", carril: 1, col: 5, fila: 1, txt: "Proponer alcance alternativo por escrito (*)", ref: "M.01.02" },
+        { id: "a5", tipo: "tarea", carril: 0, col: 6, txt: "Revisar el contrato" },
         { id: "g2", tipo: "decision", carril: 0, col: 7, txt: "¿Acepta?" },
-        { id: "a6", tipo: "tarea", carril: 1, col: 8, txt: "Firmar contrato, abrir grupo y carpeta", ref: "M.01.03" },
+        { id: "a6", tipo: "tarea", carril: 1, col: 8, txt: "Firmar en PDF y crear grupo de WhatsApp", ref: "M.01.03" },
         { id: "r2", tipo: "tarea", carril: 1, col: 8, fila: 1, txt: "Registrar motivo de no cierre (*)", ref: "M.01.03" },
         { id: "f1", tipo: "fin", carril: 1, col: 9, txt: "Caso pasa a M.02" },
         { id: "f3", tipo: "fin", carril: 1, col: 9, fila: 1, txt: "Caso no cerrado" }
       ],
       flujos: [
         { de: "i", a: "a1" }, { de: "a1", a: "a2" }, { de: "a2", a: "a3" }, { de: "a3", a: "g1" },
-        { de: "g1", a: "a4", txt: "sí" }, { de: "g1", a: "r1", txt: "no" }, { de: "r1", a: "f2" },
+        { de: "g1", a: "a4", txt: "sí" }, { de: "g1", a: "r1", txt: "no" }, { de: "r1", a: "a4", txt: "alternativa" },
         { de: "a4", a: "a5" }, { de: "a5", a: "g2" }, { de: "g2", a: "a6", txt: "sí" }, { de: "g2", a: "r2", txt: "no" },
         { de: "a6", a: "f1" }, { de: "r2", a: "f3" }
       ],
-      notas: ["El precio oferta solo se aplica con autorización de Henry.", "La consulta de viabilidad a Teddy o a un especialista es propuesta (*)."]
+      notas: ["No se rechazan casos: si lo pedido no se puede cumplir, se propone un alcance alternativo y el cliente decide.", "El precio oferta solo se aplica con autorización de Henry.", "La verificación de viabilidad con Teddy o un especialista es propuesta (*)."]
     },
     "M.02": {
       titulo: "Investigación y Desarrollo: desarrollo de cada parte o avance",
-      carriles: ["Henry (Gerencia)", "Teddy", "Especialista externo"],
+      carriles: ["Henry (Gerencia y revisión)", "Responsable del caso (Henry o Teddy)", "Especialista externo"],
       nodos: [
         { id: "i", tipo: "inicio", carril: 0, col: 0, txt: "Caso contratado (M.01)" },
-        { id: "a1", tipo: "tarea", carril: 0, col: 1, txt: "Planificar el caso por partes (*)", ref: "M.02.01" },
+        { id: "a1", tipo: "tarea", carril: 0, col: 1, txt: "Asignar por especialidad y planificar por partes", ref: "M.02.01" },
         { id: "a2", tipo: "tarea", carril: 1, col: 2, txt: "Buscar información y antecedentes", ref: "M.02.02" },
         { id: "g1", tipo: "decision", carril: 0, col: 3, txt: "¿Requiere especialista?" },
         { id: "a3", tipo: "tarea", carril: 2, col: 4, txt: "Elaborar trabajo especializado", ref: "M.02.03" },
@@ -562,7 +563,7 @@ window.BB = {
         { de: "g2", a: "a8", txt: "sí" }, { de: "g2", a: "a5", txt: "no, corregir" },
         { de: "a8", a: "g3" }, { de: "g3", a: "f1", txt: "no" }, { de: "g3", a: "a2", txt: "sí, siguiente parte" }
       ],
-      notas: ["Si el trabajo es del especialista, la revisión técnica la hace un revisor competente en la materia (*).", "Los servicios SV-01 y SV-04 tienen 7 partes; SV-02 y SV-03 avanzan por avances; SV-05 son sesiones por horas."]
+      notas: ["Ingeniería → Henry; química y biología → Teddy; investigaciones descriptivas o correlacionales → cualquiera de los dos.", "Si el trabajo es del especialista, la revisión técnica la hace un revisor competente en la materia (*).", "Los servicios SV-01 y SV-04 tienen 7 partes; SV-02 y SV-03 avanzan por avances; SV-05 son sesiones por horas."]
     },
     "M.07": {
       titulo: "Entrega, cobro por partes, encuestas y cierre",
@@ -603,8 +604,9 @@ window.BB = {
     { cod: "DO-M01-01", nombre: "Lista de servicios y precios (normal y oferta)", proceso: "M.01", tipo: "Documento", estado: "Existe, por revisar", existe: true },
     { cod: "FO-M01-01", nombre: "Registro de contactos", proceso: "M.01", tipo: "Formato", estado: "Por elaborar", existe: false },
     { cod: "FO-M01-02", nombre: "Ficha de diagnóstico del caso", proceso: "M.01", tipo: "Formato", estado: "Por elaborar", existe: false },
-    { cod: "FO-M01-03", nombre: "Propuesta de servicio", proceso: "M.01", tipo: "Formato", estado: "Por elaborar", existe: false },
-    { cod: "CT-S04-01", nombre: "Contrato general con clientes", proceso: "S.04", tipo: "Contrato", estado: "Existe, por revisar", existe: true },
+    { cod: "FO-M01-03", nombre: "Anexo de condiciones del contrato (partes, rondas, cambios)", proceso: "M.01", tipo: "Formato", estado: "Por elaborar", existe: false },
+    { cod: "FO-M01-04", nombre: "Mensaje automático de bienvenida", proceso: "M.01", tipo: "Formato", estado: "Existe, por revisar", existe: true },
+    { cod: "CT-S04-01", nombre: "Contrato general con clientes (incluye cotización y cronograma; firma en PDF)", proceso: "S.04", tipo: "Contrato", estado: "Existe, por revisar", existe: true },
     { cod: "FO-M02-01", nombre: "Plan del caso", proceso: "M.02", tipo: "Formato", estado: "Por elaborar", existe: false },
     { cod: "FO-M02-02", nombre: "Control de entregas y revisiones", proceso: "M.02", tipo: "Formato", estado: "Por elaborar", existe: false },
     { cod: "FO-M02-03", nombre: "Registro de búsqueda de información", proceso: "M.02", tipo: "Formato", estado: "Por elaborar", existe: false },
@@ -628,6 +630,7 @@ window.BB = {
     { version: "0.2", fecha: "21/11/2026", cambio: "Datos de SUNAT, BLACKBELT Institute (M.08), ficha M.01.", estado: "Mapa validado por Henry" },
     { version: "0.3", fecha: "22/11/2026", cambio: "Portafolio web con modelo UNHEVAL: niveles 0-1-2, fichas técnicas, fichas de indicador, interrelación y documentos.", estado: "Borrador" },
     { version: "0.4", fecha: "22/11/2026", cambio: "Catálogo de 5 servicios de M.02 con lo que incluye, pagos por partes y reportes de %SIM e %IA; indicadores M.02.I05 y M.02.I06.", estado: "Borrador" },
-    { version: "0.5", fecha: "22/11/2026", cambio: "Diagramas de flujo con carriles (estilo BPMN) de M.01, M.02 y M.07; precios fuera de los procesos; encuesta intermedia en la parte 4; herramientas Turnitin y JustDone.", estado: "Borrador" }
+    { version: "0.5", fecha: "22/11/2026", cambio: "Diagramas de flujo con carriles (estilo BPMN) de M.01, M.02 y M.07; precios fuera de los procesos; encuesta intermedia en la parte 4; herramientas Turnitin y JustDone.", estado: "Borrador" },
+    { version: "0.6", fecha: "24/11/2026", cambio: "Respuestas de Henry: canales, primera respuesta, datos previos, Meet, contrato con cotización y cronograma en PDF, no se rechazan casos; asignación de casos por especialidad; indicador M.01.I05.", estado: "Borrador" }
   ]
 };
