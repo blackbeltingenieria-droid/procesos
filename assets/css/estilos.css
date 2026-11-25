@@ -211,3 +211,7 @@ h1:focus,h1:focus-visible{outline:none}
 .bpmn-ley .ev-f{width:14px;height:14px;border-radius:50%;border:3px solid #A32D2D;background:#FCEBEB}
 .bpmn-ley .ta{width:22px;height:14px;border-radius:4px;border:1.5px solid #B8892A;background:#FFF8E6} .bpmn-ley .ta.pr{border-style:dashed}
 .bpmn-ley .dc{width:12px;height:12px;transform:rotate(45deg);border:1.5px solid #B8892A;background:#FFF1CC}
+.sim{display:inline-block;font-size:.68rem;font-weight:600;color:#1F4E9A;background:#E6EEFB;border:1px dashed #7FA2DA;border-radius:4px;padding:0 5px;margin-left:4px;text-transform:uppercase;letter-spacing:.04em;vertical-align:middle}
+.aviso-sim{background:#EEF3FC;border:1px solid #B9CCEC;border-left:4px solid #1F5FBF;border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px;font-size:.92rem}
+.arranque{padding-left:20px} .arranque li{display:flex;gap:12px;align-items:flex-end;margin-bottom:10px} .arranque li span:first-child{min-width:280px}
+.linea-llenar{flex:1;border-bottom:1px dotted #999;height:1em}

@@ -5,7 +5,7 @@
   const D = window.BB;
   const $ = (s, r = document) => r.querySelector(s);
   const esc = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const prop = (t) => esc(t).replace(/\(\*\)/g, '<span class="prop" title="Propuesto: hoy no se realiza">propuesto</span>');
+  const prop = (t) => esc(t).replace(/\(\*\)/g, '<span class="prop" title="Propuesto: hoy no se realiza">propuesto</span>').replace(/\(sim\)/g, '<span class="sim" title="Simulado: supuesto por validar con Henry">simulado</span>');
 
   /* ---------- Índices ---------- */
   const P = {}, N1 = {}, I = {};
@@ -36,17 +36,18 @@
   }
   function diagrama(cod) {
     const g = D.diagramas && D.diagramas[cod]; if (!g) return "";
-    const LW = 46, CW = 156, LH = 176, TW = 132, TH = 58, DR = 28, ER = 15;
+    const LW = 52, CW = 156, LH = 176, TW = 132, TH = 58, DR = 28, ER = 15;
     const cols = Math.max(...g.nodos.map((n) => n.col)) + 1;
     const W = LW + cols * CW + 16, H = g.carriles.length * LH;
-    const pos = {}; g.nodos.forEach((n) => { pos[n.id] = { n, x: LW + n.col * CW + CW / 2, y: n.carril * LH + (n.fila ? 128 : 60) }; });
+    const pos = {}; g.nodos.forEach((n) => { pos[n.id] = { n, x: LW + n.col * CW + CW / 2, y: n.carril * LH + (n.fila ? 132 : 60) }; });
     const ext = (p) => (p.n.tipo === "tarea" ? [TW / 2, TH / 2] : p.n.tipo === "decision" ? [DR, DR] : [ER, ER]);
     const L = (p) => p.x - ext(p)[0], R = (p) => p.x + ext(p)[0], T = (p) => p.y - ext(p)[1], B = (p) => p.y + ext(p)[1];
     let svg = "", vuelta = 0;
     g.carriles.forEach((c, k) => {
       const y = k * LH;
       svg += `<rect x="0" y="${y}" width="${W}" height="${LH}" class="${k % 2 ? "carril2" : "carril1"}"/><rect x="0" y="${y}" width="${LW}" height="${LH}" class="carril-cab"/>`;
-      svg += `<text x="${LW / 2}" y="${y + LH / 2}" class="carril-txt" transform="rotate(-90 ${LW / 2} ${y + LH / 2})">${esc(c)}</text>`;
+      const cl = envolver(c, 24);
+      svg += `<text x="${LW / 2}" y="${y + LH / 2}" class="carril-txt" transform="rotate(-90 ${LW / 2} ${y + LH / 2})">${cl.map((l, k) => `<tspan x="${LW / 2}" dy="${k === 0 ? -(cl.length - 1) * 7 : 14}">${esc(l)}</tspan>`).join("")}</text>`;
     });
     g.flujos.forEach((f) => {
       const a = pos[f.de], b = pos[f.a]; if (!a || !b) return;
@@ -66,9 +67,9 @@
     });
     g.nodos.forEach((n) => {
       const p = pos[n.id]; let s = "";
-      const lineas = (arr, y0, cls) => arr.map((l, k) => `<text x="${p.x}" y="${y0 + k * 13}" class="${cls}" text-anchor="middle">${prop(l).replace(/<span[^>]*>propuesto<\/span>/, "")}</text>`).join("");
+      const lineas = (arr, y0, cls) => arr.map((l, k) => `<text x="${p.x}" y="${y0 + k * 13}" class="${cls}" text-anchor="middle">${prop(l).replace(/<span[^>]*>(propuesto|simulado)<\/span>/g, "")}</text>`).join("");
       if (n.tipo === "tarea") {
-        const ls = envolver(n.txt.replace("(*)", "").trim(), 20), propuesto = n.txt.includes("(*)");
+        const ls = envolver(n.txt.replace("(*)", "").replace("(sim)", "").trim(), 20), propuesto = n.txt.includes("(*)");
         s = `<rect x="${L(p)}" y="${T(p)}" width="${TW}" height="${TH}" rx="9" class="tarea${propuesto ? " propuesta" : ""}${n.ref ? " enlace" : ""}"/>` + lineas(ls, p.y - (ls.length - 1) * 6.5 + 4, "tarea-txt");
         if (n.ref) s = `<a href="#/p/${n.ref}"><title>${esc(n.ref + " " + (N1[n.ref] ? N1[n.ref].n.nombre : ""))}</title>${s}</a>`;
       } else if (n.tipo === "decision") {
@@ -78,7 +79,7 @@
       }
       svg += `<g>${s}</g>`;
     });
-    return `<figure class="bpmn"><figcaption><b>Diagrama de flujo · ${esc(g.titulo)}</b><span>Haga clic en una actividad para abrir su subproceso. Borde punteado = actividad propuesta.</span></figcaption>
+    return `<figure class="bpmn"><figcaption><b>Diagrama de flujo · ${esc(g.titulo)} ${g.simulado ? '<span class="sim">simulado</span>' : ""}</b><span>Haga clic en una actividad para abrir su subproceso. Borde punteado = actividad propuesta.</span></figcaption>
       <div class="scroll"><svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${esc("Diagrama de flujo de " + cod + ": " + g.titulo)}">
       <defs><marker id="fl-${cod}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="flecha"/></marker></defs>${svg}</svg></div>
       <div class="bpmn-ley"><span><i class="ev-i"></i>Inicio</span><span><i class="ev-f"></i>Fin</span><span><i class="ta"></i>Actividad</span><span><i class="ta pr"></i>Actividad propuesta</span><span><i class="dc"></i>Decisión</span></div>
@@ -112,14 +113,14 @@
       <li><b>Ficha técnica (nivel 0):</b> objetivo, alcance, dueño, tabla proveedores → entradas → subprocesos → productos → clientes, requisitos, controles, recursos e indicadores.</li>
       <li><b>Subprocesos (nivel 1) y actividades (nivel 2):</b> quién hace qué, con qué registros.</li>
       <li><b>Ficha de indicador:</b> fórmula, fuente, frecuencia, responsable y meta en semáforo.</li></ol>
-      <p class="muted">Marcas: <span class="prop">propuesto</span> = aún no se realiza. Estados operativos: ${Object.keys(D.estados).map(est).join(" ")}</p></section>`;
+      <p class="muted">Marcas: <span class="prop">propuesto</span> = aún no se realiza · <span class="sim">simulado</span> = supuesto por validar con Henry. Estados operativos: ${Object.keys(D.estados).map(est).join(" ")}</p></section>`;
   }
 
   function pcard(p) {
     const ik = (p.indicadores || []).map((c) => I[c]).find((i) => i && i.clave) || I[(p.indicadores || [])[0]];
     return `<a class="pcard t-${p.tipo}${p.prioridad ? " prio" : ""}${p.unidad ? " unidad" : ""}${p.aparte ? " aparte" : ""}" href="#/p/${p.cod}"${color(p)}>
       <span class="pc-cod">${p.cod}</span><span class="pc-nom">${esc(p.nombre)}</span>
-      <span class="pc-meta">${est(p.estado)}</span>
+      <span class="pc-meta">${est(p.estado)}${p.simulado ? ' <span class="sim">sim</span>' : ""}</span>
       ${ik ? `<span class="pc-kpi" title="Indicador clave">KPI: ${esc(ik.nombre)}</span>` : ""}</a>`;
   }
 
@@ -173,6 +174,7 @@
         <div class="fh-t"><p class="eyebrow">Ficha técnica del proceso · nivel 0</p><h1>${p.cod} ${esc(p.nombre)}</h1></div>
         <table class="fh-meta"><tr><th>Clasificación</th><td>${D.tipos[p.tipo].nombre}</td></tr><tr><th>Código</th><td>FC-${p.cod.replace(".", "")}</td></tr><tr><th>Versión</th><td>${esc(p.version)}</td></tr><tr><th>Estado</th><td>${docb(p.doc)}</td></tr></table>
       </header>
+      ${p.simulado ? '<div class="aviso-sim"><b>Ficha simulada.</b> Subprocesos, flujos e indicadores se completaron con lo que se sabe y con supuestos razonables. Todo lo marcado <span class="sim">simulado</span> o <span class="prop">propuesto</span> debe validarse con Henry.</div>' : ""}
       <table class="tabla kv"><tr><th>Objetivo</th><td>${esc(p.objetivo)}</td></tr><tr><th>Alcance</th><td>${esc(p.alcance)}</td></tr>
         <tr><th>Inicio · fin</th><td>${esc(p.inicio)} → ${esc(p.fin)}</td></tr><tr><th>Dueño del proceso</th><td>${esc(p.dueno)}</td></tr><tr><th>Situación actual</th><td>${est(p.estado)} ${esc(p.situacion)}</td></tr></table>
 
@@ -181,10 +183,11 @@
       ${(p.sipoc || []).map((s) => `<tr><td>${autolink(s.prov)}</td><td>${prop(s.ent)}</td><td class="sub">${autolink(s.sub)}</td><td>${prop(s.prod)}</td><td>${autolink(s.cli)}</td></tr>`).join("")}</tbody></table></div>
 
       <h2>Diagrama de flujo</h2>
-      ${D.diagramas && D.diagramas[cod] ? diagrama(cod) : '<p class="muted">Por elaborar en la fase que corresponde a este proceso (ver <a href="#/plan">plan</a>).</p>'}
+      ${D.diagramas && D.diagramas[cod] ? diagrama(cod) : p.arranque ? '<p class="muted">Esta línea aún no opera: su flujo se dibujará con la ficha de arranque (abajo) antes del primer cliente.</p>' : '<p class="muted">Por elaborar (ver <a href="#/plan">plan</a>).</p>'}
+      ${p.arranque ? `<h2>Ficha de arranque · llenar antes del primer cliente</h2><ol class="arranque">${p.arranque.map((x) => `<li><span>${esc(x)}</span><span class="linea-llenar"></span></li>`).join("")}</ol>` : ""}
 
       <h2>Procesos de nivel 1</h2>
-      <div class="n1-grid">${(p.nivel1 || []).map((n) => `<a class="n1" href="#/p/${n.cod}"><span class="cod">${n.cod}</span><b>${esc(n.nombre)}</b><span>${esc(n.objetivo || "")}</span><span class="cnt">${(n.nivel2 || []).length || "—"} actividades</span></a>`).join("")}</div>
+      <div class="n1-grid">${(p.nivel1 || []).map((n) => `<a class="n1" href="#/p/${n.cod}"><span class="cod">${n.cod}</span><b>${esc(n.nombre)}</b><span>${esc(n.objetivo || "")}</span><span class="cnt">${(n.nivel2 || []).length || "—"} actividades${D.diagramas && D.diagramas[n.cod] ? " · con diagrama" : ""}</span></a>`).join("")}</div>
 
       <div class="dos">
         <section><h2>Requisitos legales</h2>${lista(p.requisitos)}</section>
@@ -220,6 +223,7 @@
       <table class="tabla kv"><tr><th>Objetivo</th><td>${esc(n.objetivo || "Por levantar.")}</td></tr><tr><th>Responsable</th><td>${esc(n.dueno || p.dueno)}</td></tr>
       ${n.entradas ? `<tr><th>Entradas</th><td>${n.entradas.map(prop).join("<br>")}</td></tr>` : ""}${n.salidas ? `<tr><th>Salidas</th><td>${n.salidas.map(prop).join("<br>")}</td></tr>` : ""}
       ${n.registros ? `<tr><th>Registros</th><td>${n.registros.map((r) => `<a href="#/documentos">${prop(r)}</a>`).join("<br>")}</td></tr>` : ""}</table>
+      ${D.diagramas && D.diagramas[cod] ? `<h2>Diagrama de flujo</h2>${diagrama(cod)}` : ""}
       <h2>Actividades · nivel 2</h2>
       ${(n.nivel2 || []).length ? `<ol class="pasos">${n.nivel2.map((a) => `<li><span class="cod">${esc(a.cod)}</span> ${prop(a.nombre)}</li>`).join("")}</ol>` : '<p class="muted">Por levantar.</p>'}
       ${ind.length ? `<h2>Indicadores</h2><div class="kpis">${ind.map((i) => `<a class="kpi" href="#/i/${i.cod}"><span class="cod">${i.cod}</span><b>${esc(i.nombre)}</b></a>`).join("")}</div>` : ""}
