@@ -20,8 +20,8 @@ window.BB = {
     empresa: "BLACKBELT GROUP S.A.C.",
     ruc: "20616527704",
     domicilio: "Cal. Huayllabamba 192, Coop. Veintisiete de Abril, Ate, Lima",
-    version: "0.11",
-    fecha: "22/11/2026",
+    version: "0.12",
+    fecha: "24/11/2026",
     elaboro: "Johann Herrera (Mejora Continua)",
     aprueba: "Henry (Gerencia General)",
     estadoMapa: "Validado",
@@ -669,6 +669,7 @@ window.BB = {
     { version: "0.8", fecha: "24/11/2026", cambio: "M.02 detallado: tareas, entregable y control de cada una de las 7 partes; cierre de cada parte con Turnitin y JustDone; nuevo subproceso M.02.06 Preparación para la sustentación.", estado: "Borrador (simulado, por validar)" },
     { version: "0.9", fecha: "24/11/2026", cambio: "M.02.04: paso de edición de estilo y claridad (herramienta por definir).", estado: "Borrador (simulado, por validar)" },
     { version: "0.10", fecha: "24/11/2026", cambio: "Paráfrasis con cita (QuillBot como apoyo, revisión humana) en M.02.04 y en la corrección por %SIM alto (M.02.05).", estado: "Borrador (simulado, por validar)" },
-    { version: "0.11", fecha: "24/11/2026", cambio: "Procedimiento de falso positivo del detector de IA en M.02.05, riesgo asociado y formatos FO-M02-04 y FO-M02-05.", estado: "Borrador (simulado, por validar)" }
+    { version: "0.11", fecha: "24/11/2026", cambio: "Procedimiento de falso positivo del detector de IA en M.02.05, riesgo asociado y formatos FO-M02-04 y FO-M02-05.", estado: "Borrador (simulado, por validar)" },
+    { version: "0.12", fecha: "24/11/2026", cambio: "Página de auditoría de completitud que se calcula automáticamente.", estado: "Borrador" }
   ]
 };

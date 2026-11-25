@@ -310,6 +310,37 @@
     <h2>Control de cambios</h2><table class="tabla"><thead><tr><th>Versión</th><th>Fecha</th><th>Cambio</th><th>Estado</th></tr></thead><tbody>${D.cambios.map((c) => `<tr><td>${esc(c.version)}</td><td>${esc(c.fecha)}</td><td>${esc(c.cambio)}</td><td>${esc(c.estado)}</td></tr>`).join("")}</tbody></table>`;
   }
 
+  function vAuditoria() {
+    const crit = (p) => {
+      const n1 = p.nivel1 || [], dg = D.diagramas || {};
+      return {
+        "Datos generales": !!(p.objetivo && p.alcance && p.inicio && p.fin),
+        "Dueño definido": !/por definir/i.test(p.dueno),
+        "Nivel 1": n1.length > 0,
+        "Nivel 2 completo": n1.length > 0 && n1.every((n) => (n.nivel2 || []).length > 0),
+        "SIPOC": (p.sipoc || []).length > 0,
+        "Requisitos legales": (p.requisitos || []).length > 0,
+        "Controles": (p.controles || []).length > 0,
+        "Recursos": !!(p.recursos && (p.recursos.humanos || []).some((x) => !/por definir/i.test(x))),
+        "Indicadores": (p.indicadores || []).length > 0 && p.indicadores.every((c) => I[c]),
+        "Diagrama nivel 0": !!dg[p.cod],
+        "Diagramas nivel 1": n1.length > 0 && n1.every((n) => dg[n.cod]),
+        "Riesgos": (p.riesgos || []).length > 0
+      };
+    };
+    const cuenta = (p, re) => { let t = JSON.stringify(p); Object.keys(D.diagramas || {}).filter((k) => k === p.cod || k.startsWith(p.cod + ".")).forEach((k) => (t += JSON.stringify(D.diagramas[k]))); return (t.match(re) || []).length; };
+    const filas = D.procesos.map((p) => { const c = crit(p), ok = Object.values(c).filter(Boolean).length, tot = Object.keys(c).length, pct = Math.round((100 * ok) / tot);
+      const metas = (p.indicadores || []).filter((x) => I[x] && I[x].meta).length;
+      return { p, c, ok, tot, pct, metas, prop: cuenta(p, /\(\*\)/g), sim: cuenta(p, /\(sim\)/g) }; });
+    const nivel = (x) => (x.pct === 100 ? "aud-ok" : x.pct >= 75 ? "aud-med" : "aud-bajo");
+    const crits = Object.keys(filas[0].c);
+    return `${migas([["#/auditoria", "Auditoría"]])}<h1>Auditoría de completitud</h1>
+    <p class="lead">Se calcula sola a partir de datos.js. Estructura completa no significa validado: ningún proceso está aprobado por Henry todavía. Revise primero lo marcado como propuesto y simulado.</p>
+    <div class="scroll"><table class="tabla aud"><thead><tr><th>Proceso</th><th>Completo</th>${crits.map((k) => `<th class="v"><span>${k}</span></th>`).join("")}<th>Propuestos</th><th>Simulados</th><th>Metas</th><th>Pendientes</th><th>Estado</th></tr></thead><tbody>
+    ${filas.map((x) => `<tr><td><a href="#/p/${x.p.cod}">${x.p.cod}</a> ${esc(x.p.nombre)}${x.p.simulado ? ' <span class="sim">sim</span>' : ""}</td><td class="${nivel(x)}">${x.pct}%</td>${crits.map((k) => `<td class="${x.c[k] ? "si" : "no"}">${x.c[k] ? "✓" : "✗"}</td>`).join("")}<td>${x.prop}</td><td>${x.sim}</td><td>${x.metas}/${(x.p.indicadores || []).length}</td><td>${(x.p.pendientes || []).length}</td><td>${docb(x.p.doc)}</td></tr>`).join("")}
+    </tbody></table></div>`;
+  }
+
   function vNoEncontrado() { return `<h1>No encontrado</h1><p>Ese código no existe. <a href="#/mapa">Volver al mapa</a>.</p>`; }
 
   /* ---------- Buscador ---------- */
@@ -333,7 +364,7 @@
   function render() {
     const h = location.hash.replace(/^#\/?/, "");
     const [ruta, arg] = h.split("/");
-    const vistas = { "": vInicio, mapa: vMapa, inventario: vInventario, indicadores: vIndicadores, interrelacion: vInterrelacion, servicios: vServicios, documentos: vDocumentos, plan: vPlan };
+    const vistas = { "": vInicio, mapa: vMapa, inventario: vInventario, indicadores: vIndicadores, interrelacion: vInterrelacion, servicios: vServicios, documentos: vDocumentos, plan: vPlan, auditoria: vAuditoria };
     let html;
     if (ruta === "p") html = vFicha(decodeURIComponent(arg || ""));
     else if (ruta === "i") html = vIndicador(decodeURIComponent(arg || ""));

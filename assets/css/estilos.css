@@ -221,3 +221,7 @@ details.parte summary{cursor:pointer;padding:10px 14px;font-weight:600;display:f
 .parte-cuerpo{padding:0 16px 14px} .parte-cuerpo ol{margin-top:0}
 .cierre-parte{background:#FBF4E2;border:1px solid #E8D29B;border-radius:10px;padding:12px 16px;margin:12px 0}
 .cierre-parte ol{margin:6px 0 0}
+.aud td{text-align:center} .aud td:first-child{text-align:left;white-space:nowrap}
+.aud th.v{height:130px;vertical-align:bottom;padding:4px} .aud th.v span{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}
+.aud td.si{color:var(--op);font-weight:700} .aud td.no{color:#A32D2D;background:#FCEFEF;font-weight:700}
+.aud-ok{background:#EAF5EF;color:var(--op);font-weight:700} .aud-med{background:#FFF6E0;color:var(--ini);font-weight:700} .aud-bajo{background:#FCEFEF;color:#A32D2D;font-weight:700}
