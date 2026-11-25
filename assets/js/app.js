@@ -160,6 +160,16 @@
       <div class="acciones"><button class="btn sec" data-abrir="1">Expandir todo</button> <button class="btn sec" data-abrir="0">Contraer todo</button></div>${filas}`;
   }
 
+  function partesHTML() {
+    if (!D.partesInvestigacion) return "";
+    return `<h2>Qué se hace en cada parte de la investigación</h2>
+      <p class="muted">Aplica a SV-01 (tesis) y SV-04 (levantamiento de observaciones); SV-02 (plan de tesis) llega hasta la parte 4. Contenido simulado, por validar.</p>
+      ${D.partesInvestigacion.map((x) => `<details class="parte"${x.n === 1 ? " open" : ""}><summary><span class="pn">${x.n}</span> ${esc(x.nombre)}</summary>
+        <div class="parte-cuerpo"><ol>${x.tareas.map((t) => `<li>${prop(t)}</li>`).join("")}</ol>
+        <table class="tabla kv"><tr><th>Entregable</th><td>${esc(x.entregable)}</td></tr><tr><th>Control antes de enviar</th><td>${esc(x.control)}</td></tr></table></div></details>`).join("")}
+      <div class="cierre-parte"><b>Al cerrar cada parte</b><ol>${D.cierreCadaParte.map((t) => `<li>${prop(t)}</li>`).join("")}</ol></div>`;
+  }
+
   function vFicha(cod) {
     if (N1[cod]) return vFichaN1(cod);
     const p = P[cod];
@@ -205,7 +215,7 @@
 
       ${(p.riesgos || []).length ? `<h2>Riesgos y controles propuestos</h2><table class="tabla"><thead><tr><th>Riesgo</th><th>Control</th></tr></thead><tbody>${p.riesgos.map((x) => `<tr><td>${autolink(x.r)}</td><td>${autolink(x.c)}</td></tr>`).join("")}</tbody></table>` : ""}
       ${(p.pendientes || []).length ? `<h2>Pendientes por levantar</h2><ul class="pend">${p.pendientes.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
-      ${cod === "M.02" ? `<p><a class="btn sec" href="#/servicios">Ver catálogo de servicios de investigación →</a></p>` : ""}
+      ${cod === "M.02" ? partesHTML() + `<p><a class="btn sec" href="#/servicios">Ver catálogo de servicios de investigación →</a></p>` : ""}
       <footer class="ficha-pie"><span>Elaboró: ${esc(D.meta.elaboro)}</span><span>Revisa y aprueba: ${esc(D.meta.aprueba)}</span><span>Fecha: ${esc(D.meta.fecha)}</span></footer>
     </article>
     <nav class="prevnext">${ant ? `<a href="#/p/${ant}">← ${ant} ${esc(P[ant].nombre)}</a>` : "<span></span>"}<button class="btn sec" onclick="window.print()">Imprimir ficha</button>${sig ? `<a href="#/p/${sig}">${sig} ${esc(P[sig].nombre)} →</a>` : "<span></span>"}</nav>`;
